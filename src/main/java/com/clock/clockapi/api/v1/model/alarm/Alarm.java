@@ -40,7 +40,7 @@ public class Alarm extends BaseEntity {
 
     /**
      * Only not null if alarmFrequencyType = costume
-     * Type DD:MM:YYYY
+     * Type DD:MM:YYYY DD:MM:YYYY DD:MM:YYYY
      */
     private String alarmFrequencyCostume;
 

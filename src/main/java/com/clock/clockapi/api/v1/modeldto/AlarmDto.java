@@ -1,5 +1,6 @@
 package com.clock.clockapi.api.v1.modeldto;
 
+import com.clock.clockapi.api.v1.model.Date;
 import com.clock.clockapi.api.v1.model.Time;
 import com.clock.clockapi.security.model.UserApp;
 import com.clock.clockapi.api.v1.model.alarm.AlarmTurnOffType;
@@ -40,7 +41,7 @@ public class AlarmDto {
     /**
      * Only not empty if alarmFrequencyType = costume
      */
-    private List<Time> alarmFrequencyCostume;
+    private List<Date> alarmFrequencyCostume;
 
 
     private AlarmTurnOffType alarmTurnOffType;

@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 public class UserServiceImpl implements UserDetailsService, UserAppMapperService, UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -33,6 +35,7 @@ public class UserServiceImpl implements UserDetailsService, UserAppMapperService
 
     @Override
     public UserApp saveUser(UserApp userApp) {
+        userApp.setPassword(passwordEncoder.encode(userApp.getPassword()));
         return userRepository.save(userApp);
     }
 
@@ -46,11 +49,6 @@ public class UserServiceImpl implements UserDetailsService, UserAppMapperService
 
     @Override
     public UserApp getUserById_UserAppObject(UserApp userApp) {
-        if (userApp.getId().equals("1234")){
-            UserApp testUser = new UserApp();
-            testUser.setId("1234");
-            return testUser;
-        }
         return userRepository
                 .findById(userApp.getId())
                 .orElseThrow(() ->

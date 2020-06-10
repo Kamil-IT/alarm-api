@@ -5,7 +5,7 @@ import com.clock.clockapi.api.v1.model.Time;
 import com.clock.clockapi.api.v1.model.stopwatch.Stopwatch;
 import com.clock.clockapi.api.v1.modeldto.StopwatchDto;
 
-import com.clock.clockapi.services.UserAppServicesImpl;
+import com.clock.clockapi.services.UserServiceImpl;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -13,7 +13,7 @@ import org.mapstruct.Named;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {UserAppServicesImpl.class, TimeMapper.class})
+@Mapper(componentModel = "spring", uses = {UserServiceImpl.class, TimeMapper.class})
 public interface StopwatchMapper {
 
     @Mapping(target = "userId", source = "userApp.id")
@@ -39,8 +39,22 @@ public interface StopwatchMapper {
     }
 
     @Named("measuredTimesStringToMeasuredTimesList")
-    default List<Time> measuredTimesListToMeasuredTimesString(String measuredTimes){
-//        TODO: implement this
-        return new ArrayList<>();
+    default List<Time> measuredTimesStringToMeasuredTimesList(String measuredTimes){
+        ArrayList<Time> times = new ArrayList<>();
+
+        if (measuredTimes == null){
+            return times;
+        }
+
+        for (int i = 0; i < measuredTimes.length(); i = i + 9) {
+            Time time = new Time();
+            time.setHours(Integer.parseInt(measuredTimes.substring(i + 0, i + 2)));
+            time.setMinutes(Integer.parseInt(measuredTimes.substring(i + 3, i + 5)));
+            time.setSeconds(Integer.parseInt(measuredTimes.substring(i + 6, i + 8)));
+
+            times.add(time);
+        }
+
+        return times;
     }
 }

@@ -12,6 +12,7 @@ import com.clock.clockapi.services.UserService;
 import com.clock.clockapi.services.v1.AlarmService;
 import com.clock.clockapi.services.v1.StopwatchService;
 import com.clock.clockapi.services.v1.TimerService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,15 +25,28 @@ public class Bootstrap {
     private final StopwatchService stopwatchService;
     private final TimerService timerService;
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    public Bootstrap(AlarmService alarmService, StopwatchService stopwatchService, TimerService timerService, UserService userService) {
+    public Bootstrap(AlarmService alarmService, StopwatchService stopwatchService, TimerService timerService, UserService userService, PasswordEncoder passwordEncoder) {
         this.alarmService = alarmService;
         this.stopwatchService = stopwatchService;
         this.timerService = timerService;
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
 
 
 //        Init some data
+
+
+        UserApp user1 = UserApp.builder()
+                .username("admin")
+                .password(passwordEncoder
+                        .encode("admin")).build();
+        UserApp user2 = UserApp.builder()
+                .username("user")
+                .password(passwordEncoder
+                        .encode("user")).build();
+
 
         AlarmDto normalAlarmDto = AlarmDto.builder()
                 .name("alarm")
@@ -40,12 +54,12 @@ public class Bootstrap {
                 .time(new Time(10, 12, 6, TimeZone.getDefault()))
                 .ringType(RingType.BIRDS)
                 .alarmFrequencyType(AlarmFrequencyType.MONDAY)
-                .userApp(UserApp.builder().id("1234").build())
+                .userApp(user1)
                 .alarmTurnOffType(AlarmTurnOffType.normal)
                 .build();
 
         StopwatchDto stopwatchDto = new StopwatchDto("1234",
-                UserApp.builder().id("1234").build(),
+                user2,
                 Time.builder().seconds(50).minutes(30).hours(13).build(),
                 List.of(
                         Time.builder()
@@ -54,20 +68,16 @@ public class Bootstrap {
                                 .seconds(50).minutes(30).hours(6).build()));
 
         TimerDto timerDto = TimerDto.builder()
-                .userApp(UserApp.builder().id("1234").build())
+                .userApp(user1)
                 .hours(12).minutes(12).seconds(10)
                 .currentHours(10).currentMinutes(5).currentSeconds(5)
                 .build();
 
 
-        UserApp user1 = UserApp.builder().username("admin").password("admin").build();
-        UserApp user2 = UserApp.builder().username("user").password("user").build();
-
-
+        userService.saveUser(user1);
+        userService.saveUser(user2);
         alarmService.post(normalAlarmDto);
         stopwatchService.post(stopwatchDto);
         timerService.post(timerDto);
-        userService.saveUser(user1);
-        userService.saveUser(user2);
     }
 }
