@@ -1,5 +1,6 @@
-package com.clock.clockapi.security;
+package com.clock.clockapi.security.config;
 
+import com.clock.clockapi.security.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
-    public static final String AUTH_ENDPOINT = "/auth";
+    public static final String AUTH_ENDPOINT = "/api/auth";
 
     private final UserDetailsService userDetailsService;
     private final JwtRequestFilter jwtRequestFilter;
@@ -44,6 +45,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         http
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
+
+
+
 
     @Bean
     @Override

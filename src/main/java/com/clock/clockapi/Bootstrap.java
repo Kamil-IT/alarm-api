@@ -12,12 +12,14 @@ import com.clock.clockapi.services.UserService;
 import com.clock.clockapi.services.v1.AlarmService;
 import com.clock.clockapi.services.v1.StopwatchService;
 import com.clock.clockapi.services.v1.TimerService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.TimeZone;
 
+@Slf4j
 @Component
 public class Bootstrap {
 
@@ -37,15 +39,12 @@ public class Bootstrap {
 
 //        Init some data
 
-
         UserApp user1 = UserApp.builder()
                 .username("admin")
-                .password(passwordEncoder
-                        .encode("admin")).build();
+                .password("admin").build();
         UserApp user2 = UserApp.builder()
                 .username("user")
-                .password(passwordEncoder
-                        .encode("user")).build();
+                .password("user").build();
 
 
         AlarmDto normalAlarmDto = AlarmDto.builder()

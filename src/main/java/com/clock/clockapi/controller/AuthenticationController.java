@@ -5,14 +5,18 @@ import com.clock.clockapi.security.exception.BadCredentialsException;
 import com.clock.clockapi.security.mapper.UserAppMapper;
 import com.clock.clockapi.security.model.*;
 import com.clock.clockapi.services.UserServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
 public class AuthenticationController {
@@ -21,27 +25,42 @@ public class AuthenticationController {
     private final JwtUtil jwtTokenUtil;
     private final UserServiceImpl userService;
     private final UserAppMapper userAppMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthenticationController(AuthenticationManager authenticationManager, JwtUtil jwtTokenUtil, UserServiceImpl userService, UserAppMapper userAppMapper) {
+
+    public AuthenticationController(AuthenticationManager authenticationManager, JwtUtil jwtTokenUtil, UserServiceImpl userService, UserAppMapper userAppMapper, PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
         this.userService = userService;
         this.userAppMapper = userAppMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
     @PostMapping({"/auth", "/auth/"})
     public ResponseEntity<?> createJwtToken(@RequestBody AuthenticationJwtRequest request) throws BadCredentialsException {
+//        TODO: Repair it
+//        try {
+//            authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+//            );
+//        }
+//        catch (AuthenticationException e){
+//            throw new BadCredentialsException("Incorrect password or username", request);
+//        }
+        final UserDetails userDetails;
         try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
-            );
+            userDetails = userService
+                    .loadUserByUsername(request.getUsername());
+            String password = passwordEncoder.encode(request.getPassword());
+            if (!passwordEncoder.matches(userDetails.getPassword(), password)){
+                throw new RuntimeException();
+            }
+            log.error("I recognise you");
         }
-        catch (AuthenticationException e){
+        catch (Exception e){
             throw new BadCredentialsException("Incorrect password or username", request);
         }
-        final UserDetails userDetails = userService
-                .loadUserByUsername(request.getUsername());
 
         final String jwt = jwtTokenUtil.generateToken(userDetails);
 
@@ -68,6 +87,7 @@ public class AuthenticationController {
 
     @ExceptionHandler(BadCredentialsException.class)
     public BadCredentialsResponse handleBadCredentialsException(BadCredentialsException e){
+        log.warn("Handled BadCredentialsException");
         return new BadCredentialsResponse(
                 e.getMessage(),
                 e.getAuthenticationJwtRequest());
