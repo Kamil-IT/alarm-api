@@ -1,0 +1,5 @@
+
+###
+GET http://localhost:8080/api/v1/timer
+Content-Type: application/json
+Authorization: Bearer JWT_BEARER_TOKEN

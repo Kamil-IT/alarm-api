@@ -52,8 +52,7 @@ public class AuthenticationController {
         try {
             userDetails = userService
                     .loadUserByUsername(request.getUsername());
-            String password = passwordEncoder.encode(request.getPassword());
-            if (!passwordEncoder.matches(userDetails.getPassword(), password)){
+            if (!passwordEncoder.matches(request.getPassword(), userDetails.getPassword())){
                 throw new RuntimeException();
             }
             log.error("I recognise you");
