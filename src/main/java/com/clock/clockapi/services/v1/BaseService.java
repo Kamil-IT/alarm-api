@@ -17,10 +17,10 @@ public interface BaseService<Entity, Id> {
     void delete(Id id) throws NotFoundException;
 
     default String notFoundMessage(String entityName, Id id){
-        return "Not found " + entityName + " witch id = " + id;
+        return String.format("Not found %s witch id = %s", entityName, id);
     }
 
     default String idExistInDb(String entityName, Id id){
-        return "Entity " + entityName + " witch id = " + id + " already exist in db";
+        return String.format("Entity %s witch id = %s already exist in db", entityName, id);
     }
 }
