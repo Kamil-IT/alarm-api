@@ -16,15 +16,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     public static final String AUTH_ENDPOINT = "/api/auth";
+    public static final String CREATE_NEW_USER_ENDPOINT = "/api/newaccount";
+    public static final String H2_CONSOLE_ENDPOINT = "/h2-console/**";
 
     private final UserDetailsService userDetailsService;
     private final JwtRequestFilter jwtRequestFilter;
+    private final AuthenticationManager authenticationManager;
 
 
     public SecurityConfigurer(@Qualifier("userServiceImpl") UserDetailsService userDetailsService,
-                              JwtRequestFilter jwtRequestFilter) {
+                              JwtRequestFilter jwtRequestFilter, AuthenticationManager authenticationManager) {
         this.userDetailsService = userDetailsService;
         this.jwtRequestFilter = jwtRequestFilter;
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
@@ -38,20 +42,22 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(AUTH_ENDPOINT).permitAll()
+                .antMatchers(CREATE_NEW_USER_ENDPOINT).permitAll()
+                .antMatchers(H2_CONSOLE_ENDPOINT).permitAll() // TODO: Delete it before published
+                .antMatchers("/console/**").permitAll() // TODO: Delete it before published
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
+        http
+                .headers().frameOptions().disable();
     }
 
-
-
-
-    @Bean
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
+        return authenticationManager;
     }
 }

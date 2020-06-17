@@ -1,6 +1,32 @@
+
+###
 ### Get JWT token for user admin
 POST http://localhost:8080/api/auth
 Content-Type: application/json
 
-{ "username" : "admin", "password": "admin" }
+{
+  "username" : "admin",
+  "password": "admin"
+}
 
+###
+### Create new user
+POST http://localhost:8080/api/newaccount
+Content-Type: application/json
+
+{
+  "username": "user12324",
+  "password": "userpassword",
+  "email": "user@example.com"
+}
+
+###
+### Delete user
+DELETE http://localhost:8080/api/deleteaccount
+Content-Type: application/json
+Authorization: Bearer JWT_BEARER_TOKEN
+
+{
+  "username" : "user",
+  "password" : "userpassword"
+}

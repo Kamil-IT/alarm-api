@@ -53,4 +53,11 @@ public class UserApp extends BaseEntity implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new HashSet<>();
     }
+
+    public void setAccountWorkingInServer(){
+        this.accountNonExpired = true;
+        this.accountNonLocked = true;
+        this.credentialsNonExpired = true;
+        this.enabled = true;
+    }
 }

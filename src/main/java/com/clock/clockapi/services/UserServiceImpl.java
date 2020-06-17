@@ -29,6 +29,14 @@ public class UserServiceImpl implements UserDetailsService, UserAppMapperService
     }
 
     @Override
+    public UserApp getUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository
+                .findUserAppByUsername(username)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException("Not found user witch username = " + username));
+    }
+
+    @Override
     public UserApp getUserById(String id) throws NotFoundException {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found user witch id = " + id));
     }

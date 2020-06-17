@@ -2,6 +2,7 @@ package com.clock.clockapi.services;
 
 import com.clock.clockapi.security.model.UserApp;
 import javassist.NotFoundException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface UserService {
     UserApp saveUser(UserApp userApp);
 
     void deleteUserById(String id) throws NotFoundException;
+
+    UserApp getUserByUsername(String username) throws UsernameNotFoundException;
 }
