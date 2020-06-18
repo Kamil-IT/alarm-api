@@ -8,6 +8,7 @@ import com.clock.clockapi.services.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -103,17 +104,18 @@ public class AuthenticationController {
      *
      * @return should return message and deleted account
      */
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping({"/deleteaccount", "/deleteaccount/"})
     public UserAppDeletedResponse deleteAccount(@RequestBody AuthenticationJwtRequest userDtoToDelete,
                                                 Principal principal) throws BadCredentialsException {
-        if (!principal.getName().equals(userDtoToDelete.getUsername())){
-            throw new BadCredentialsException("Username isn't the same as users what you wont delete",
-                    userDtoToDelete);
-        }
-
         UserApp userToDelete;
 
         try {
+            if (!principal.getName().equals(userDtoToDelete.getUsername())){
+                throw new BadCredentialsException("Username isn't the same as users what you wont delete",
+                        userDtoToDelete);
+            }
+
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             userDtoToDelete.getUsername(), userDtoToDelete.getPassword(), new ArrayList<>())

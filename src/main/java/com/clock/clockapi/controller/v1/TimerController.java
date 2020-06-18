@@ -7,6 +7,7 @@ import com.clock.clockapi.services.v1.BaseUserFilterService;
 import com.clock.clockapi.services.v1.TimerService;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +16,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
+@PreAuthorize("isAuthenticated()")
 @RequestMapping("api/v1/timer")
 public class TimerController implements BaseController<String, TimerDto>{
 

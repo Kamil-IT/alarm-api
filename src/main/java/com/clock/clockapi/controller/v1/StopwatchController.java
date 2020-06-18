@@ -6,6 +6,7 @@ import com.clock.clockapi.services.v1.BaseUserFilterService;
 import com.clock.clockapi.services.v1.StopwatchService;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +15,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
+@PreAuthorize("isAuthenticated()")
 @RequestMapping("api/v1/stopwatch")
 public class StopwatchController implements BaseController<String, StopwatchDto>{
 
