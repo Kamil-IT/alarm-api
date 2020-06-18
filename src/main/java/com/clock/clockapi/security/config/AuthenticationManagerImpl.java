@@ -31,8 +31,6 @@ public class AuthenticationManagerImpl implements AuthenticationManager {
                     String.format("Password: %s dont match to user with username: %s", password, username));
         }
 
-        authentication.setAuthenticated(true);
-
         return authentication;
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 
 @Slf4j
 @RestController
@@ -51,7 +52,7 @@ public class AuthenticationController {
     public ResponseEntity<?> createJwtToken(@RequestBody AuthenticationJwtRequest request) throws BadCredentialsException {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword(), new ArrayList<>())
             );
         }
         catch (AuthenticationException e){
@@ -115,7 +116,7 @@ public class AuthenticationController {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            userDtoToDelete.getUsername(), userDtoToDelete.getPassword())
+                            userDtoToDelete.getUsername(), userDtoToDelete.getPassword(), new ArrayList<>())
             );
 
             userToDelete = userService.getUserByUsername(userDtoToDelete.getUsername());
