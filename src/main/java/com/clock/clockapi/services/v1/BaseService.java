@@ -20,7 +20,7 @@ public interface BaseService<Entity, Id> {
         return String.format("Not found %s witch id = %s", entityName, id);
     }
 
-    default String idExistInDb(String entityName, Id id){
+    default String idExistInDbMessage(String entityName, Id id){
         return String.format("Entity %s witch id = %s already exist in db", entityName, id);
     }
 }

@@ -5,6 +5,7 @@ import com.clock.clockapi.api.v1.Error;
 import javassist.NotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface BaseController<KeyId, ResponseEntity> {
@@ -15,19 +16,21 @@ public interface BaseController<KeyId, ResponseEntity> {
      * page
      * page/
      * @return should return all ResponseEntity
+     * @param principal current user
      */
     @GetMapping({"", "/"})
-    List<ResponseEntity> getAll();
+    List<ResponseEntity> getAll(Principal principal);
 
     /**
      * Paths: /{id}
      * Example:
      * page/25
      * @param id entity id
+     * @param principal current user
      * @return should return ResponseEntity with id from path /{id}
      */
     @GetMapping("/{id}")
-    ResponseEntity getById(@PathVariable("id") KeyId id) throws NotFoundException;
+    ResponseEntity getById(@PathVariable("id") KeyId id, Principal principal) throws NotFoundException;
 
     /**
      * Paths: ... , .../
@@ -37,10 +40,11 @@ public interface BaseController<KeyId, ResponseEntity> {
      * page
      * page/
      * @param entity entity to create
+     * @param principal current user
      * @return should return created ResponseEntity
      */
     @PostMapping({"", "/"})
-    ResponseEntity post(@RequestBody ResponseEntity entity);
+    ResponseEntity post(@RequestBody ResponseEntity entity, Principal principal);
 
     /**
      * Paths: ... , .../
@@ -50,20 +54,22 @@ public interface BaseController<KeyId, ResponseEntity> {
      * page
      * page/
      * @param entity entity to create or update
+     * @param principal current user
      * @return should return created or updated ResponseEntity
      */
     @PutMapping({"", "/"})
-    ResponseEntity put(@RequestBody ResponseEntity entity);
+    ResponseEntity put(@RequestBody ResponseEntity entity, Principal principal);
 
     /**
      * Paths: /{id}
      * Example:
      * page/25
      * @param id id object to delete
+     * @param principal current user
      * @return should return object base on DeleteResponse
      */
     @DeleteMapping("/{id}")
-    Delete delete(@PathVariable("id") KeyId id) throws NotFoundException;
+    Delete delete(@PathVariable("id") KeyId id, Principal principal) throws NotFoundException;
 
     /**
      * Should handle exception
@@ -73,5 +79,5 @@ public interface BaseController<KeyId, ResponseEntity> {
     @ExceptionHandler({NotFoundException.class, IllegalArgumentException.class, NullPointerException.class})
     default Error errorHandler(Exception e){
         return Error.builder().message(e.getMessage()).status("404").build();
-    };
+    }
 }

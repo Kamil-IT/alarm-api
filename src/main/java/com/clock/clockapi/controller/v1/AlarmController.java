@@ -2,11 +2,13 @@ package com.clock.clockapi.controller.v1;
 
 import com.clock.clockapi.api.v1.Delete;
 import com.clock.clockapi.api.v1.modeldto.AlarmDto;
-import com.clock.clockapi.services.v1.AlarmService;
+import com.clock.clockapi.services.v1.BaseUserFilterService;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 @AllArgsConstructor
@@ -14,7 +16,7 @@ import java.util.List;
 @RequestMapping("api/v1/alarm")
 public class AlarmController implements BaseController<String, AlarmDto> {
 
-    private final AlarmService alarmService;
+    private final BaseUserFilterService<AlarmDto, String> alarmService;
 
     /**
      * Paths: ... , .../
@@ -23,10 +25,11 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      * page/
      *
      * @return should return all ResponseEntity
+     * @param principal current user
      */
     @Override
-    public List<AlarmDto> getAll() {
-        return alarmService.getAll();
+    public List<AlarmDto> getAll(Principal principal) {
+        return alarmService.getAll(principal.getName());
     }
 
     /**
@@ -35,11 +38,12 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      * page/25
      *
      * @param s entity id
+     * @param principal current user
      * @return should return ResponseEntity with id from path /{id}
      */
     @Override
-    public AlarmDto getById(String s) throws NotFoundException {
-        return alarmService.getById(s);
+    public AlarmDto getById(String s, Principal principal) throws NotFoundException {
+        return alarmService.getById(s, principal.getName());
     }
 
     /**
@@ -51,11 +55,12 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      * page/
      *
      * @param alarmDto entity to create
+     * @param principal current user
      * @return should return created ResponseEntity
      */
     @Override
-    public AlarmDto post(AlarmDto alarmDto) {
-        return alarmService.post(alarmDto);
+    public AlarmDto post(AlarmDto alarmDto, Principal principal) {
+        return alarmService.post(alarmDto, principal.getName());
     }
 
     /**
@@ -67,11 +72,12 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      * page/
      *
      * @param alarmDto entity to create or update
+     * @param principal current user
      * @return should return created or updated ResponseEntity
      */
     @Override
-    public AlarmDto put(AlarmDto alarmDto) {
-        return alarmService.put(alarmDto);
+    public AlarmDto put(AlarmDto alarmDto, Principal principal) {
+        return alarmService.put(alarmDto, principal.getName());
     }
 
     /**
@@ -80,11 +86,12 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      * page/25
      *
      * @param s id object to delete
+     * @param principal current user
      * @return should return object base on DeleteResponse
      */
     @Override
-    public Delete delete(String s) throws NotFoundException {
-        alarmService.delete(s);
+    public Delete delete(String s, Principal principal) throws NotFoundException {
+        alarmService.delete(s, principal.getName());
         return Delete.builder().status("success").objectId(s).build();
     }
 }
