@@ -13,6 +13,6 @@ public interface TimerMapper {
     @Mapping(target = "userId", source = "userApp.id")
     Timer timerDtoToTimer(TimerDto timerDto);
 
-    @Mapping(target = "userApp", source = "userId", qualifiedByName = "getUserById_UserAppObject")
+    @Mapping(target = "userApp", source = "userId", qualifiedByName = "getUserById")
     TimerDto timerToTimerDto(Timer timer);
 }

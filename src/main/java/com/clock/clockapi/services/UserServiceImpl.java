@@ -5,6 +5,7 @@ import com.clock.clockapi.security.model.UserApp;
 import com.clock.clockapi.repository.UserRepository;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
+import org.mapstruct.Named;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,6 +37,7 @@ public class UserServiceImpl implements UserDetailsService, UserAppMapperService
                         new UsernameNotFoundException("Not found user witch username = " + username));
     }
 
+    @Named("getUserById")
     @Override
     public UserApp getUserById(String id) throws NotFoundException {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("Not found user witch id = " + id));
@@ -55,6 +57,7 @@ public class UserServiceImpl implements UserDetailsService, UserAppMapperService
         userRepository.deleteById(id);
     }
 
+    @Named("getUserById_UserAppObject")
     @Override
     public UserApp getUserById_UserAppObject(UserApp userApp) {
         return userRepository

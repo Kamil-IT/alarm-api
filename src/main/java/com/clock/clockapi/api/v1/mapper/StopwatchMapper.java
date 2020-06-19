@@ -22,7 +22,7 @@ public interface StopwatchMapper {
             qualifiedByName = "measuredTimesListToMeasuredTimesString")
     Stopwatch stopwatchDtoToStopwatch(StopwatchDto stopwatchDto);
 
-    @Mapping(target = "userApp", source = "userId", qualifiedByName = "getUserById_UserAppObject")
+    @Mapping(target = "userApp", source = "userId", qualifiedByName = "getUserById")
     @Mapping(target = "time", source = "time", qualifiedByName = "timeStringToTimeObject")
     @Mapping(target = "measuredTimes", source = "measuredTimes",
             qualifiedByName = "measuredTimesStringToMeasuredTimesList")
