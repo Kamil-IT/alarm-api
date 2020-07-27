@@ -1,5 +1,5 @@
 # Alarm API
-REST API for alarm app, with send JSON as response and use JWT authentication based on Java/Spring. 
+REST API for alarm app, which send JSON as response and use JWT authentication based on Java/Spring. 
 In that moment use h2 in memory database, in future that willl be change to MySQL or PostgreSQL. 
 
 # Authentication
