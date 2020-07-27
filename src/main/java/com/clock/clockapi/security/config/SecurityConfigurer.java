@@ -1,8 +1,8 @@
 package com.clock.clockapi.security.config;
 
 import com.clock.clockapi.security.JwtRequestFilter;
+import javafx.print.Collation;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -12,6 +12,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @EnableGlobalMethodSecurity(
         prePostEnabled = true,
@@ -23,6 +27,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     public static final String AUTH_ENDPOINT = "/api/auth";
     public static final String CREATE_NEW_USER_ENDPOINT = "/api/newaccount";
     public static final String H2_CONSOLE_ENDPOINT = "/h2-console/**";
+    public static final String API_DOCS_JSON_SWAGGER_ENDPOINT = "/v2/api-docs";
 
     private final UserDetailsService userDetailsService;
     private final JwtRequestFilter jwtRequestFilter;
@@ -48,6 +53,15 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(AUTH_ENDPOINT).permitAll()
                 .antMatchers(CREATE_NEW_USER_ENDPOINT).permitAll()
+                .antMatchers(API_DOCS_JSON_SWAGGER_ENDPOINT).permitAll()
+//                Swagger paths
+                .antMatchers("/v2/api-docs",
+                        "/configuration/ui",
+                        "/swagger-resources/**",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/webjars/**").permitAll()
+                .antMatchers().permitAll()
                 .antMatchers(H2_CONSOLE_ENDPOINT).permitAll() // TODO: Delete it before published
                 .antMatchers("/console/**").permitAll() // TODO: Delete it before published
                 .anyRequest().authenticated()
