@@ -3,7 +3,7 @@ REST API for alarm app, with send JSON as response and use JWT authentication ba
 In that moment use h2 in memory database, in future that willl be change to MySQL or PostgreSQL. 
 
 # Authentication
-[Tests](https://github.com/Kamil-IT/clock-api/blob/master/src/test/java/com/clock/clockapi/controller/AuthController.http)
+[Example use](https://github.com/Kamil-IT/clock-api/blob/master/src/test/java/com/clock/clockapi/controller/AuthController.http)
 
 Request to get JWT token should by to ```/api/auth``` and have JSON body witch username and password.
 Token is valid 30 minutes.
