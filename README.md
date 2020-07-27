@@ -16,4 +16,6 @@ All request shoud have header:
 
 Base URL ```/api/v1/```
 
+Full swager JSON documentation available on http://localhost:8080/v2/api-docs
 
+Full swager ui documentation available on http://localhost:8080/swagger-ui.html
