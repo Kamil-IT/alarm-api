@@ -68,7 +68,7 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
 
     @Override
     public List<AlarmDto> getAll(String username) {
-        return alarmRepository.findAllByUserId(getUserIdByUsername(username))
+        return alarmRepository.findAllByUserApp_Id(getUserIdByUsername(username))
                 .stream()
                 .map(alarmMapper::alarmToAlarmDto)
                 .collect(Collectors.toList());
@@ -77,7 +77,7 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
     @Override
     public AlarmDto getById(String id, String username) throws NotFoundException {
         return alarmMapper.alarmToAlarmDto(
-                alarmRepository.findByIdAndUserId(id, getUserIdByUsername(username))
+                alarmRepository.findFirstByIdAndUserApp_Id(id, getUserIdByUsername(username))
                         .orElseThrow(() ->
                                 new NotFoundException(notFoundMessage("alarm", id))));
     }
@@ -91,12 +91,12 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
             if (alarmRepository.existsById(alarmDto.getId())) {
                 throw new IllegalArgumentException(idExistInDbMessage("Stopwatch", alarmDto.getId()));
             }
-            if (!alarmDto.getUserApp().getId().equals(userFromFunction.getId())) {
+            if (!alarmDto.getUserId().equals(userFromFunction.getId())) {
                 throw new IllegalArgumentException(
-                        failurePermissionMessage(alarmDto.getUserApp().getId(), username));
+                        failurePermissionMessage(alarmDto.getUserId(), username));
             }
         }
-        alarmDto.setUserApp(userFromFunction);
+        alarmDto.setUserId(userFromFunction.getId());
         Alarm saveAlarm = alarmRepository.save(alarmMapper.alarmDtoToAlarm(alarmDto));
 
         return alarmMapper.alarmToAlarmDto(saveAlarm);
@@ -108,13 +108,13 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
                 IllegalArgumentException(notFoundMessage("User", username)));
 
         if (alarmDto.getId() != null) {
-            if (!alarmDto.getUserApp().getId().equals(userFromFunction.getId())) {
+            if (!alarmDto.getUserId().equals(userFromFunction.getId())) {
                 throw new IllegalArgumentException(
-                        failurePermissionMessage(alarmDto.getUserApp().getId(), username));
+                        failurePermissionMessage(alarmDto.getUserId(), username));
             }
         }
 
-        alarmDto.setUserApp(userFromFunction);
+        alarmDto.setUserId(userFromFunction.getId());
         Alarm saveAlarm = alarmRepository.save(alarmMapper.alarmDtoToAlarm(alarmDto));
 
         return alarmMapper.alarmToAlarmDto(saveAlarm);
@@ -125,9 +125,9 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
         Alarm alarmToDelete = alarmRepository.findById(id).orElseThrow(() ->
                 new NotFoundException(notFoundMessage("alarm", id)));
 
-        if (!alarmToDelete.getUserId().equals(getUserIdByUsername(username))) {
+        if (!alarmToDelete.getUserApp().getId().equals(getUserIdByUsername(username))) {
             throw new IllegalArgumentException(
-                    failurePermissionMessage(alarmToDelete.getUserId(), username));
+                    failurePermissionMessage(alarmToDelete.getUserApp().getId(), username));
 
         }
         alarmRepository.deleteById(id);

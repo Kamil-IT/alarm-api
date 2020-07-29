@@ -3,6 +3,7 @@ package com.clock.clockapi.api.v1.model.alarm;
 import com.clock.clockapi.api.v1.model.BaseEntity;
 import com.clock.clockapi.api.v1.model.alarm.frequency.AlarmFrequencyType;
 import com.clock.clockapi.api.v1.model.alarm.ring.RingType;
+import com.clock.clockapi.security.model.UserApp;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -16,7 +17,9 @@ import javax.persistence.*;
 @Table(name = "Alarms")
 public class Alarm extends BaseEntity {
 
-    private String userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserApp userApp;
 
     private String name;
     private String description;

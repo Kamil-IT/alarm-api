@@ -1,8 +1,6 @@
 package com.clock.clockapi.services.v1;
 
-import com.clock.clockapi.api.v1.mapper.AlarmMapper;
 import com.clock.clockapi.api.v1.mapper.AlarmMapperImpl;
-import com.clock.clockapi.api.v1.mapper.TimeMapperImpl;
 import com.clock.clockapi.api.v1.model.Time;
 import com.clock.clockapi.api.v1.model.alarm.Alarm;
 import com.clock.clockapi.api.v1.model.alarm.AlarmTurnOffType;
@@ -12,17 +10,11 @@ import com.clock.clockapi.api.v1.modeldto.AlarmDto;
 import com.clock.clockapi.repository.UserRepository;
 import com.clock.clockapi.repository.v1.AlarmRepository;
 import com.clock.clockapi.security.model.UserApp;
-import com.clock.clockapi.services.UserServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.MockBeans;
 
 import java.util.*;
 
@@ -55,7 +47,7 @@ class AlarmServiceTest {
             .time("12:12:12")
             .ringType(RingType.BIRDS)
             .alarmFrequencyType(AlarmFrequencyType.MONDAY)
-            .userId(USER_ID)
+            .userApp(USER_APP)
             .alarmTurnOffType(AlarmTurnOffType.normal)
             .build();
 
@@ -66,7 +58,7 @@ class AlarmServiceTest {
             .time(new Time(10, 12, 6, TimeZone.getDefault()))
             .ringType(RingType.BIRDS)
             .alarmFrequencyType(AlarmFrequencyType.MONDAY)
-            .userApp(USER_APP)
+            .userId(USER_ID)
             .alarmTurnOffType(AlarmTurnOffType.normal)
             .build();
 

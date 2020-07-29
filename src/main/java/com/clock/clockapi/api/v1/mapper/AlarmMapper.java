@@ -14,13 +14,13 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {UserServiceImpl.class, TimeMapper.class})
 public interface AlarmMapper {
 
-    @Mapping(target = "userApp", source = "userId", qualifiedByName = "getUserById")
+    @Mapping(target = "userId", source = "userApp.id")
     @Mapping(target = "time", source = "time", qualifiedByName = "timeStringToTimeObject")
     @Mapping(target = "alarmFrequencyCostume", source = "alarmFrequencyCostume",
             qualifiedByName = "alarmFrequencyCostumeStringToAlarmFrequencyCostumeList")
     AlarmDto alarmToAlarmDto(Alarm alarm);
 
-    @Mapping(target = "userId", source = "userApp.id")
+    @Mapping(target = "userApp", source = "userId", qualifiedByName = "getUserById")
     @Mapping(target = "time", source = "time", qualifiedByName = "timeObjectToTimeString")
     @Mapping(target = "alarmFrequencyCostume", source = "alarmFrequencyCostume",
             qualifiedByName = "alarmFrequencyCostumeListToAlarmFrequencyCostumeString")

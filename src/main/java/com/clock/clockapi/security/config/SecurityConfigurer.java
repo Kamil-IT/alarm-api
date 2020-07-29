@@ -55,8 +55,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers(CREATE_NEW_USER_ENDPOINT).permitAll()
                 .antMatchers(API_DOCS_JSON_SWAGGER_ENDPOINT).permitAll()
 //                Swagger paths
-                .antMatchers("/v2/api-docs",
-                        "/configuration/ui",
+                .antMatchers("/configuration/ui",
                         "/swagger-resources/**",
                         "/configuration/security",
                         "/swagger-ui.html",

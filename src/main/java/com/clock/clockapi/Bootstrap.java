@@ -46,6 +46,8 @@ public class Bootstrap {
                 .username("user")
                 .password("user").build();
 
+        user1 = userService.saveUser(user1);
+        user2 = userService.saveUser(user2);
 
         AlarmDto normalAlarmDto = AlarmDto.builder()
                 .name("alarm")
@@ -53,7 +55,7 @@ public class Bootstrap {
                 .time(new Time(10, 12, 6, TimeZone.getDefault()))
                 .ringType(RingType.BIRDS)
                 .alarmFrequencyType(AlarmFrequencyType.MONDAY)
-                .userApp(user1)
+                .userId(user1.getId())
                 .alarmTurnOffType(AlarmTurnOffType.normal)
                 .build();
 
@@ -73,8 +75,6 @@ public class Bootstrap {
                 .build();
 
 
-        userService.saveUser(user1);
-        userService.saveUser(user2);
         alarmService.post(normalAlarmDto);
         stopwatchService.post(stopwatchDto);
         timerService.post(timerDto);

@@ -24,7 +24,7 @@ public class AlarmDto {
     private String name;
     private String description;
 
-    private UserApp userApp;
+    private String userId;
 
     private Time time;
 

@@ -45,7 +45,7 @@ class AlarmMapperTest {
             .time("12:12:12")
             .ringType(RingType.BIRDS)
             .alarmFrequencyType(AlarmFrequencyType.MONDAY)
-            .userId(USER_ID)
+            .userApp(USER_APP)
             .alarmTurnOffType(AlarmTurnOffType.normal)
             .build();
 
@@ -58,7 +58,7 @@ class AlarmMapperTest {
             .ringName("house")
             .alarmFrequencyType(AlarmFrequencyType.CUSTOM)
             .alarmFrequencyCostume("22-11-2020")
-            .userId("1234")
+            .userApp(USER_APP)
             .alarmTurnOffType(AlarmTurnOffType.normal)
             .build();
 
@@ -69,7 +69,7 @@ class AlarmMapperTest {
             .time(new Time(10, 12, 6, TimeZone.getDefault()))
             .ringType(RingType.BIRDS)
             .alarmFrequencyType(AlarmFrequencyType.MONDAY)
-            .userApp(USER_APP)
+            .userId(USER_ID)
             .alarmTurnOffType(AlarmTurnOffType.normal)
             .build();
 
@@ -87,12 +87,14 @@ class AlarmMapperTest {
         assertEquals(normalAlarm.getTime(), alarmDto.getTime().toString());
         assertEquals(normalAlarm.getRingType(), alarmDto.getRingType());
         assertEquals(normalAlarm.getAlarmFrequencyType(), alarmDto.getAlarmFrequencyType());
-        assertEquals(normalAlarm.getUserId(), alarmDto.getUserApp().getId());
+        assertEquals(normalAlarm.getUserApp().getId(), alarmDto.getUserId());
         assertEquals(normalAlarm.getAlarmTurnOffType(), alarmDto.getAlarmTurnOffType());
     }
 
     @Test
-    void alarmDtoToAlarm() {
+    void alarmDtoToAlarm() throws NotFoundException {
+
+        when(userService.getUserById(any())).thenReturn(USER_APP);
 
         Alarm alarm = alarmMapper.alarmDtoToAlarm(normalAlarmDto);
 
@@ -102,7 +104,7 @@ class AlarmMapperTest {
         assertEquals(normalAlarmDto.getTime().toString(), alarm.getTime());
         assertEquals(normalAlarmDto.getRingType(), alarm.getRingType());
         assertEquals(normalAlarmDto.getAlarmFrequencyType(), alarm.getAlarmFrequencyType());
-        assertEquals(normalAlarmDto.getUserApp().getId(), alarm.getUserId());
+        assertEquals(normalAlarmDto.getUserId(), alarm.getUserApp().getId());
         assertEquals(normalAlarmDto.getAlarmTurnOffType(), alarm.getAlarmTurnOffType());
     }
 

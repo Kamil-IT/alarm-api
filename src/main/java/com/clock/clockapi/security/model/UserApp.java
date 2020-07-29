@@ -1,6 +1,7 @@
 package com.clock.clockapi.security.model;
 
 import com.clock.clockapi.api.v1.model.BaseEntity;
+import com.clock.clockapi.api.v1.model.alarm.Alarm;
 import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
@@ -60,4 +62,7 @@ public class UserApp extends BaseEntity implements UserDetails {
         this.credentialsNonExpired = true;
         this.enabled = true;
     }
+
+    @OneToMany(mappedBy = "userApp")
+    private List<Alarm> alarms;
 }
