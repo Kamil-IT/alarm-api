@@ -76,7 +76,9 @@ public interface BaseController<KeyId, ResponseEntity> {
      * @param e exception
      * @return object base on ErrorResponse with info about error
      */
-    @ExceptionHandler({NotFoundException.class, IllegalArgumentException.class, NullPointerException.class})
+    @ExceptionHandler({NotFoundException.class, IllegalArgumentException.class,
+//            NullPointerException.class TODO
+    })
     default Error errorHandler(Exception e){
         return Error.builder().message(e.getMessage()).status("404").build();
     }

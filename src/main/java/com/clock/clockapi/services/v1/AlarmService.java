@@ -21,6 +21,8 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
     private final UserRepository userRepository;
     private final AlarmMapper alarmMapper;
 
+//    TODO: After update alarm change create time to current
+
     @Override
     public List<AlarmDto> getAll() {
         return alarmRepository.findAll()
@@ -108,7 +110,7 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
                 IllegalArgumentException(notFoundMessage("User", username)));
 
         if (alarmDto.getId() != null) {
-            if (!alarmDto.getUserId().equals(userFromFunction.getId())) {
+            if (!userFromFunction.getId().equals(alarmDto.getUserId()) && alarmDto.getUserId() != null) {
                 throw new IllegalArgumentException(
                         failurePermissionMessage(alarmDto.getUserId(), username));
             }

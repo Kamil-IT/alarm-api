@@ -12,16 +12,21 @@ import java.util.Set;
 
 @Component
 @Convert
-public class AlarmTurnOffTypeSetConverter implements AttributeConverter<Set<AlarmFrequencyType>, String> {
+public class AlarmTurnOffTypeSetConverter implements AttributeConverter<Set<AlarmFrequencyType>, String>
+{
 
     private static final String SEPARATOR = "/";
 
 
     @Override
     public String convertToDatabaseColumn(Set<AlarmFrequencyType> attribute) {
+        if (attribute.isEmpty()){
+            return "";
+        }
         StringBuilder s = new StringBuilder();
-        attribute.forEach((alarmTurnOffType) -> s.append(alarmTurnOffType.toString()));
-        return s.toString();
+        attribute.forEach((alarmTurnOffType) -> s.append(alarmTurnOffType.toString()).append(SEPARATOR));
+        String sAddSepa = s.toString();
+        return sAddSepa.substring(0, sAddSepa.length()-1);
     }
 
     @Override

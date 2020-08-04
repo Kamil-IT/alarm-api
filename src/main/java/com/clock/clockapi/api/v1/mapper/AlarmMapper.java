@@ -1,6 +1,5 @@
 package com.clock.clockapi.api.v1.mapper;
 
-import com.clock.clockapi.api.v1.conventer.AlarmTurnOffTypeSetConverter;
 import com.clock.clockapi.api.v1.model.Date;
 import com.clock.clockapi.api.v1.model.alarm.Alarm;
 import com.clock.clockapi.api.v1.modeldto.AlarmDto;
@@ -12,7 +11,7 @@ import org.mapstruct.Named;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {UserServiceImpl.class, TimeMapper.class, AlarmTurnOffTypeSetConverter.class})
+@Mapper(componentModel = "spring", uses = {UserServiceImpl.class, TimeMapper.class})
 public interface AlarmMapper {
 
     @Mapping(target = "userId", source = "userApp.id")

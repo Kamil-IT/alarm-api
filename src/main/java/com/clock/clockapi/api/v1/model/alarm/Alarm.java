@@ -85,6 +85,10 @@ public class Alarm extends BaseEntity {
         if (isActive == null){
             isActive = false;
         }
+//        Snooze
+        if (snooze == null){
+            snooze = Snooze.MIN_5;
+        }
     }
 
 }
