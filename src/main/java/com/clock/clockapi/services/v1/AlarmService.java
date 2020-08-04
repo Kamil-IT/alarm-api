@@ -41,7 +41,7 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
     public AlarmDto post(AlarmDto alarmDto) {
         if (alarmDto.getId() != null) {
             if (alarmRepository.existsById(alarmDto.getId())) {
-                throw new IllegalArgumentException(idExistInDbMessage("Alarm", alarmDto.getId()));
+                throw new IllegalArgumentException(idExistInDbMessage("alarm", alarmDto.getId()));
             }
         }
         Alarm saveAlarm = alarmRepository.save(alarmMapper.alarmDtoToAlarm(alarmDto));
@@ -89,7 +89,7 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
 
         if (alarmDto.getId() != null) {
             if (alarmRepository.existsById(alarmDto.getId())) {
-                throw new IllegalArgumentException(idExistInDbMessage("Stopwatch", alarmDto.getId()));
+                throw new IllegalArgumentException(idExistInDbMessage("alarm", alarmDto.getId()));
             }
             if (!alarmDto.getUserId().equals(userFromFunction.getId())) {
                 throw new IllegalArgumentException(
