@@ -20,6 +20,7 @@ public class Stopwatch extends BaseEntity {
      */
     private String time;
 
+    //    TODO: change to userApp
     private String userId;
 
     /**

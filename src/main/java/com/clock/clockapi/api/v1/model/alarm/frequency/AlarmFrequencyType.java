@@ -11,6 +11,7 @@ public enum AlarmFrequencyType {
     MONDAY,
     TUESDAY,
     WEDNESDAY,
+    THURSDAY,
     FRIDAY,
 
 //    Weekend

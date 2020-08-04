@@ -1,5 +1,6 @@
 package com.clock.clockapi.api.v1.mapper;
 
+import com.clock.clockapi.api.v1.conventer.AlarmTurnOffTypeSetConverter;
 import com.clock.clockapi.api.v1.model.Date;
 import com.clock.clockapi.api.v1.model.Time;
 import com.clock.clockapi.repository.UserRepository;
@@ -19,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
+import java.util.Set;
 import java.util.TimeZone;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,11 +28,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@SpringBootTest(classes = {UserServiceImpl.class, TimeMapperImpl.class, AlarmMapperImpl.class, UserRepository.class})
+@SpringBootTest(classes = {UserServiceImpl.class, TimeMapperImpl.class, AlarmMapperImpl.class, UserRepository.class, AlarmTurnOffTypeSetConverter.class})
 class AlarmMapperTest {
 
     public static final String USER_ID = "1234";
     public static final UserApp USER_APP = UserApp.builder().id(USER_ID).build();
+
+    @Autowired
+    AlarmTurnOffTypeSetConverter converter;
 
     @Autowired
     AlarmMapper alarmMapper;
@@ -44,9 +49,9 @@ class AlarmMapperTest {
             .description("nice alarm")
             .time("12:12:12")
             .ringType(RingType.BIRDS)
-            .alarmFrequencyType(AlarmFrequencyType.MONDAY)
+            .alarmFrequencyType(Set.of(AlarmFrequencyType.MONDAY))
             .userApp(USER_APP)
-            .alarmTurnOffType(AlarmTurnOffType.normal)
+            .alarmTurnOffType(AlarmTurnOffType.NORMAL)
             .build();
 
     Alarm costumeAlarm = Alarm.builder()
@@ -56,10 +61,10 @@ class AlarmMapperTest {
             .time("12:12:12")
             .ringType(RingType.COSTUME)
             .ringName("house")
-            .alarmFrequencyType(AlarmFrequencyType.CUSTOM)
+            .alarmFrequencyType(Set.of(AlarmFrequencyType.CUSTOM))
             .alarmFrequencyCostume("22-11-2020")
             .userApp(USER_APP)
-            .alarmTurnOffType(AlarmTurnOffType.normal)
+            .alarmTurnOffType(AlarmTurnOffType.NORMAL)
             .build();
 
     AlarmDto normalAlarmDto = AlarmDto.builder()
@@ -68,9 +73,9 @@ class AlarmMapperTest {
             .description("nice alarm")
             .time(new Time(10, 12, 6, TimeZone.getDefault()))
             .ringType(RingType.BIRDS)
-            .alarmFrequencyType(AlarmFrequencyType.MONDAY)
+            .alarmFrequencyType(Set.of(AlarmFrequencyType.MONDAY))
             .userId(USER_ID)
-            .alarmTurnOffType(AlarmTurnOffType.normal)
+            .alarmTurnOffType(AlarmTurnOffType.NORMAL)
             .build();
 
     @Test

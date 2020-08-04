@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 import java.util.TimeZone;
 
 @Slf4j
@@ -54,10 +55,30 @@ public class Bootstrap {
                 .description("nice alarm")
                 .time(new Time(10, 12, 6, TimeZone.getDefault()))
                 .ringType(RingType.BIRDS)
-                .alarmFrequencyType(AlarmFrequencyType.MONDAY)
+                .alarmFrequencyType(Set.of(AlarmFrequencyType.MONDAY))
                 .userId(user1.getId())
-                .alarmTurnOffType(AlarmTurnOffType.normal)
+                .alarmTurnOffType(AlarmTurnOffType.NORMAL)
                 .build();
+
+        AlarmDto normalAlarmDto2 = AlarmDto.builder()
+                .name("szkola")
+                .description("musisz_wstac")
+                .time(new Time(8, 0, 0, TimeZone.getDefault()))
+                .ringType(RingType.BIRDS)
+                .alarmFrequencyType(Set.of(AlarmFrequencyType.MONDAY))
+                .userId(user1.getId())
+                .alarmTurnOffType(AlarmTurnOffType.NORMAL)
+                .build();
+//
+//        AlarmDto normalAlarmDto3 = AlarmDto.builder()
+//                .name("Leki")
+//                .description("Antybiotyk")
+//                .time(new Time(20, 0, 5, TimeZone.getDefault()))
+//                .ringType(RingType.BIRDS)
+//                .alarmFrequencyType(AlarmFrequencyType.MONDAY)
+//                .userId(user1.getId())
+//                .alarmTurnOffType(AlarmTurnOffType.normal)
+//                .build();
 
         StopwatchDto stopwatchDto = new StopwatchDto("1234",
                 user2,
@@ -76,6 +97,8 @@ public class Bootstrap {
 
 
         alarmService.post(normalAlarmDto);
+        alarmService.post(normalAlarmDto2);
+//        alarmService.post(normalAlarmDto2);
         stopwatchService.post(stopwatchDto);
         timerService.post(timerDto);
     }

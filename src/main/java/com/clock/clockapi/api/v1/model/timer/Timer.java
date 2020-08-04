@@ -24,6 +24,7 @@ public class Timer extends BaseEntity {
     public static final int SECOND_MAX = 60;
     public static final int SECOND_MIN = 0;
 
+//    TODO: change to userApp
     private String userId;
 
     private Integer hours = 0;

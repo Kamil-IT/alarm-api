@@ -2,8 +2,8 @@ package com.clock.clockapi.api.v1.modeldto;
 
 import com.clock.clockapi.api.v1.model.Date;
 import com.clock.clockapi.api.v1.model.Time;
-import com.clock.clockapi.security.model.UserApp;
 import com.clock.clockapi.api.v1.model.alarm.AlarmTurnOffType;
+import com.clock.clockapi.api.v1.model.alarm.Snooze;
 import com.clock.clockapi.api.v1.model.alarm.frequency.AlarmFrequencyType;
 import com.clock.clockapi.api.v1.model.alarm.ring.RingType;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -28,6 +29,8 @@ public class AlarmDto {
 
     private Time time;
 
+    private Long timeCreateInMillis;
+
     private RingType ringType;
 
     /**
@@ -35,8 +38,9 @@ public class AlarmDto {
      */
     private String ringName;
 
+    private Snooze snooze;
 
-    private AlarmFrequencyType alarmFrequencyType;
+    private Set<AlarmFrequencyType> alarmFrequencyType;
 
     /**
      * Only not empty if alarmFrequencyType = costume
@@ -45,4 +49,6 @@ public class AlarmDto {
 
 
     private AlarmTurnOffType alarmTurnOffType;
+
+    private Boolean isActive;
 }

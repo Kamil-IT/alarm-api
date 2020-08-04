@@ -46,9 +46,9 @@ class AlarmServiceTest {
             .description("nice alarm")
             .time("12:12:12")
             .ringType(RingType.BIRDS)
-            .alarmFrequencyType(AlarmFrequencyType.MONDAY)
+            .alarmFrequencyType(Set.of(AlarmFrequencyType.MONDAY))
             .userApp(USER_APP)
-            .alarmTurnOffType(AlarmTurnOffType.normal)
+            .alarmTurnOffType(AlarmTurnOffType.NORMAL)
             .build();
 
     AlarmDto normalAlarmDto = AlarmDto.builder()
@@ -57,9 +57,9 @@ class AlarmServiceTest {
             .description("nice alarm")
             .time(new Time(10, 12, 6, TimeZone.getDefault()))
             .ringType(RingType.BIRDS)
-            .alarmFrequencyType(AlarmFrequencyType.MONDAY)
+            .alarmFrequencyType(Set.of(AlarmFrequencyType.MONDAY))
             .userId(USER_ID)
-            .alarmTurnOffType(AlarmTurnOffType.normal)
+            .alarmTurnOffType(AlarmTurnOffType.NORMAL)
             .build();
 
     @Test

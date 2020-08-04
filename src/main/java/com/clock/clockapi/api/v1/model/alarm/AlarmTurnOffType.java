@@ -1,7 +1,7 @@
 package com.clock.clockapi.api.v1.model.alarm;
 
 public enum AlarmTurnOffType {
-    normal,
+    NORMAL,
     MATH_TASK,
     VIBES
     }
