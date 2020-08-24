@@ -1,5 +1,6 @@
 package com.clock.clockapi;
 
+import com.clock.clockapi.api.v1.model.Date;
 import com.clock.clockapi.api.v1.model.Time;
 import com.clock.clockapi.security.model.UserApp;
 import com.clock.clockapi.api.v1.model.alarm.AlarmTurnOffType;
@@ -67,6 +68,19 @@ public class Bootstrap {
                 .ringType(RingType.BIRDS)
                 .alarmFrequencyType(Set.of(AlarmFrequencyType.MONDAY))
                 .userId(user1.getId())
+                .isActive(true)
+                .alarmTurnOffType(AlarmTurnOffType.NORMAL)
+                .build();
+
+        AlarmDto normalAlarmDto4 = AlarmDto.builder()
+                .name("szkola")
+                .description("musisz_wstac")
+                .time(new Time(8, 0, 0, TimeZone.getDefault()))
+                .ringType(RingType.BIRDS)
+                .alarmFrequencyType(Set.of(AlarmFrequencyType.SINGLE))
+                .alarmFrequencyCostume(List.of(new Date(24, 8, 2020)))
+                .userId(user1.getId())
+                .isActive(true)
                 .alarmTurnOffType(AlarmTurnOffType.NORMAL)
                 .build();
 //
@@ -98,6 +112,7 @@ public class Bootstrap {
 
         alarmService.post(normalAlarmDto);
         alarmService.post(normalAlarmDto2);
+        alarmService.post(normalAlarmDto4);
 //        alarmService.post(normalAlarmDto2);
         stopwatchService.post(stopwatchDto);
         timerService.post(timerDto);

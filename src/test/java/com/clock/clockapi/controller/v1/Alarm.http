@@ -10,15 +10,48 @@ Content-Type: application/json
 Authorization: Bearer JWT_BEARER_TOKEN
 
 {
-"alarmFrequencyCostume":[],
-"alarmFrequencyType":["FRIDAY","THURSDAY","WEDNESDAY","TUESDAY"],
-"alarmTurnOffType":"NORMAL",
-"isActive":true,"name":"",
-"ringType":"BIRDS",
-"snooze":"MIN_5",
-"time":{
-"hours":14,
-"minutes":51,
-"seconds":0
+  "alarmFrequencyCostume": [],
+  "alarmFrequencyType": [
+    "FRIDAY",
+    "THURSDAY",
+    "WEDNESDAY",
+    "TUESDAY"
+  ],
+  "alarmTurnOffType": "NORMAL",
+  "isActive": true,
+  "name": "",
+  "ringType": "BIRDS",
+  "snooze": "MIN_5",
+  "time": {
+    "hours": 14,
+    "minutes": 51,
+    "seconds": 0
+  }
 }
+
+###
+
+PUT http://localhost:8080/api/v1/alarm
+Content-Type: application/json
+Authorization: Bearer JWT_BEARER_TOKEN
+
+{
+  "id": "ID",
+  "alarmFrequencyCostume": [],
+  "alarmFrequencyType": [
+    "FRIDAY",
+    "THURSDAY",
+    "WEDNESDAY",
+    "TUESDAY"
+  ],
+  "alarmTurnOffType": "NORMAL",
+  "isActive": true,
+  "name": "",
+  "ringType": "BIRDS",
+  "snooze": "MIN_5",
+  "time": {
+    "hours": 14,
+    "minutes": 51,
+    "seconds": 0
+  }
 }
