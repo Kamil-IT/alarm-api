@@ -21,8 +21,6 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
     private final UserRepository userRepository;
     private final AlarmMapper alarmMapper;
 
-//    TODO: After update alarm change create time to current
-
     @Override
     public List<AlarmDto> getAll() {
         return alarmRepository.findAll()
@@ -46,6 +44,7 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
                 throw new IllegalArgumentException(idExistInDbMessage("alarm", alarmDto.getId()));
             }
         }
+        alarmDto.setTimeCreateInMillis(System.currentTimeMillis());
         Alarm saveAlarm = alarmRepository.save(alarmMapper.alarmDtoToAlarm(alarmDto));
 
         return alarmMapper.alarmToAlarmDto(saveAlarm);
@@ -53,6 +52,7 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
 
     @Override
     public AlarmDto put(AlarmDto alarmDto) {
+        alarmDto.setTimeCreateInMillis(System.currentTimeMillis());
         Alarm saveAlarm = alarmRepository.save(alarmMapper.alarmDtoToAlarm(alarmDto));
 
         return alarmMapper.alarmToAlarmDto(saveAlarm);
@@ -89,6 +89,7 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
         UserApp userFromFunction = userRepository.findUserAppByUsername(username).orElseThrow(() -> new
                 IllegalArgumentException(notFoundMessage("User", username)));
 
+        alarmDto.setTimeCreateInMillis(System.currentTimeMillis());
         alarmDto.setUserId(userFromFunction.getId());
 
         if (alarmDto.getId() != null) {
@@ -106,7 +107,7 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
     public AlarmDto put(AlarmDto alarmDto, String username) {
         UserApp userFromFunction = userRepository.findUserAppByUsername(username).orElseThrow(() -> new
                 IllegalArgumentException(notFoundMessage("User", username)));
-
+        alarmDto.setTimeCreateInMillis(System.currentTimeMillis());
         if (alarmDto.getId() != null) {
             if (alarmDto.getUserId() != null) {
                 throw new IllegalArgumentException(
