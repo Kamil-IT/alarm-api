@@ -6,6 +6,8 @@ import com.clock.clockapi.api.v1.model.alarm.AlarmTurnOffType;
 import com.clock.clockapi.api.v1.model.alarm.Snooze;
 import com.clock.clockapi.api.v1.model.alarm.frequency.AlarmFrequencyType;
 import com.clock.clockapi.api.v1.model.alarm.ring.RingType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +26,7 @@ public class AlarmDto {
     private String id;
 
     private String name;
+
     private String description;
 
     private String userId;
@@ -52,4 +55,14 @@ public class AlarmDto {
     private AlarmTurnOffType alarmTurnOffType;
 
     private Boolean isActive;
+
+    @JsonIgnore
+    public String getUserId() {
+        return userId;
+    }
+
+    @JsonIgnore
+    public String getRingName() {
+        return ringName;
+    }
 }

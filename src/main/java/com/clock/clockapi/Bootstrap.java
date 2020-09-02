@@ -77,7 +77,8 @@ public class Bootstrap {
                 .description("musisz_wstac")
                 .time(new Time(8, 0, 0, TimeZone.getDefault()))
                 .ringType(RingType.BIRDS)
-                .alarmFrequencyType(Set.of(AlarmFrequencyType.SINGLE))
+                .alarmFrequencyType(Set.of(AlarmFrequencyType
+                        .CUSTOM))
                 .alarmFrequencyCostume(List.of(new Date(24, 8, 2020)))
                 .userId(user1.getId())
                 .isActive(true)

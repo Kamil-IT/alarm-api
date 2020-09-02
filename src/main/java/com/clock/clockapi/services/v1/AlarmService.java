@@ -89,13 +89,11 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
         UserApp userFromFunction = userRepository.findUserAppByUsername(username).orElseThrow(() -> new
                 IllegalArgumentException(notFoundMessage("User", username)));
 
+        alarmDto.setUserId(userFromFunction.getId());
+
         if (alarmDto.getId() != null) {
             if (alarmRepository.existsById(alarmDto.getId())) {
                 throw new IllegalArgumentException(idExistInDbMessage("alarm", alarmDto.getId()));
-            }
-            if (!alarmDto.getUserId().equals(userFromFunction.getId())) {
-                throw new IllegalArgumentException(
-                        failurePermissionMessage(alarmDto.getUserId(), username));
             }
         }
         alarmDto.setUserId(userFromFunction.getId());
@@ -110,7 +108,7 @@ public class AlarmService implements BaseService<AlarmDto, String>, BaseUserFilt
                 IllegalArgumentException(notFoundMessage("User", username)));
 
         if (alarmDto.getId() != null) {
-            if (!userFromFunction.getId().equals(alarmDto.getUserId()) && alarmDto.getUserId() != null) {
+            if (alarmDto.getUserId() != null) {
                 throw new IllegalArgumentException(
                         failurePermissionMessage(alarmDto.getUserId(), username));
             }

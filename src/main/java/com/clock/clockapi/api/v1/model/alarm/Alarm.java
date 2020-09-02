@@ -7,11 +7,13 @@ import com.clock.clockapi.api.v1.model.Date;
 import com.clock.clockapi.api.v1.model.alarm.frequency.AlarmFrequencyType;
 import com.clock.clockapi.api.v1.model.alarm.ring.RingType;
 import com.clock.clockapi.security.model.UserApp;
+import com.google.common.collect.Sets;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -65,24 +67,33 @@ public class Alarm extends BaseEntity {
     private Boolean isActive;
 
     @PrePersist
-    public void ringTypeCostume_alarmFrequencyCostume(){
+    public void ringTypeCostume_alarmFrequencyCostume() {
+//          It will be use full after add possibility to add costume alarm
 //        ringTypeCostume_alarmFrequencyCostume
-        if (ringType == RingType.COSTUME && ringName == null){
-            throw new IllegalArgumentException("If RingType != COSTUME, ringName have to not be null");
-        }
-        else {
+//        if (ringType == RingType.COSTUME && ringName == null){
+//            throw new IllegalArgumentException("If RingType != COSTUME, ringName have to not be null");
+//        }
+//        else {
+//            ringName = null;
+//        }
+//        alarmFrequencyType and alarmFrequencyCostume is correct
+        if (ringType == RingType.COSTUME) {
+            ringType = RingType.ALARM_CLASSIC;
             ringName = null;
         }
-//        alarmFrequencyType and alarmFrequencyCostume is correct
-        if (alarmFrequencyType.contains(AlarmFrequencyType.CUSTOM) && alarmFrequencyCostume == null){
-            throw new IllegalArgumentException("If AlarmFrequencyType haven't got in list COSTUME, alarmFrequencyType have to not be null");
-        }
-        else if (alarmFrequencyType.contains(AlarmFrequencyType.SINGLE) && alarmFrequencyCostume == null){
-            throw new IllegalArgumentException("If AlarmFrequencyType haven't got in list SINGLE, alarmFrequencyType have to not be null");
-        }
-        else if (alarmFrequencyType.isEmpty()){
+        if (alarmFrequencyType.contains(AlarmFrequencyType.CUSTOM)) {
 //            TODO: here might be error "calendar.get(Calendar.MONTH)"
-            alarmFrequencyType.add(AlarmFrequencyType.SINGLE);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new java.util.Date());
+            if (alarmFrequencyCostume == null) {
+                alarmFrequencyCostume = List.of(new com.clock.clockapi.api.v1.model.Date(
+                        calendar.get(Calendar.DAY_OF_MONTH),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.YEAR)));
+            }
+        } else if (alarmFrequencyType.isEmpty()) {
+//            TODO: here might be error "calendar.get(Calendar.MONTH)"
+            alarmFrequencyType.add(AlarmFrequencyType.CUSTOM);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(new java.util.Date());
             this.alarmFrequencyCostume = List.of(new com.clock.clockapi.api.v1.model.Date(
@@ -92,16 +103,16 @@ public class Alarm extends BaseEntity {
         }
 
 //        TimeCreate is correct
-        if (timeCreateInMillis == null){
+        if (timeCreateInMillis == null) {
             timeCreateInMillis = System.currentTimeMillis();
         }
 
 //        Is active
-        if (isActive == null){
+        if (isActive == null) {
             isActive = false;
         }
 //        Snooze
-        if (snooze == null){
+        if (snooze == null) {
             snooze = Snooze.MIN_5;
         }
     }
