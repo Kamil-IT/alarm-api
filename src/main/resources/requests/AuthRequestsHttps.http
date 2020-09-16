@@ -1,0 +1,33 @@
+# Request for server with certificate
+
+###
+### Get JWT token for user admin
+POST https://localhost:443/api/auth
+Content-Type: application/json
+
+{
+  "username" : "admin",
+  "password": "admin"
+}
+
+###
+### Create new user
+POST https://localhost:443/api/newaccount
+Content-Type: application/json
+
+{
+  "username": "user12324",
+  "password": "userpassword",
+  "email": "user@example.com"
+}
+
+###
+### Delete user
+DELETE https://localhost:443/api/deleteaccount
+Content-Type: application/json
+Authorization: Bearer JWT_BEARER_TOKEN
+
+{
+  "username" : "user",
+  "password" : "userpassword"
+}
