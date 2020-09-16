@@ -9,3 +9,5 @@ spring:
       ddl-auto: validate
     database-platform: [Dialeclt to db ex: "org.hibernate.dialect.PostgreSQLDialect"]
     database: [Db ex: "postgresql"]
+
+jwt.secret-key: [Secred key]

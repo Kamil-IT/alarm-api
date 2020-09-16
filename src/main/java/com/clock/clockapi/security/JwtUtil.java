@@ -3,6 +3,7 @@ package com.clock.clockapi.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,10 @@ import java.util.function.Function;
 public class JwtUtil {
 
     public static final int EXPIRATION = 30;
-    private String SECRET_KEY = "secret";
+
+//    Don't use it in constructor because it will be null
+    @Value("${jwt.secret-key:secret_key}")
+    private String SECRET_KEY = "secret_key";
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

@@ -3,8 +3,10 @@ package com.clock.clockapi.security.config;
 import org.h2.server.web.WebServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
-public class H2AccessConfig {
+@Profile("default")
+public class H2AccessConfigLocal {
 
     @Bean
     ServletRegistrationBean h2servletRegistration() {

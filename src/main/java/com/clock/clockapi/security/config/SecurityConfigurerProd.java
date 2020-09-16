@@ -2,6 +2,7 @@ package com.clock.clockapi.security.config;
 
 import com.clock.clockapi.security.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -12,16 +13,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@Profile("prod")
 @EnableGlobalMethodSecurity(
         prePostEnabled = true,
         securedEnabled = true,
         jsr250Enabled = true)
 @EnableWebSecurity
-public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
+public class SecurityConfigurerProd extends WebSecurityConfigurerAdapter {
 
     public static final String AUTH_ENDPOINT = "/api/auth";
     public static final String CREATE_NEW_USER_ENDPOINT = "/api/newaccount";
-    public static final String H2_CONSOLE_ENDPOINT = "/h2-console/**";
     public static final String API_DOCS_JSON_SWAGGER_ENDPOINT = "/v2/api-docs";
 
     private final UserDetailsService userDetailsService;
@@ -29,8 +30,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     private final AuthenticationManager authenticationManager;
 
 
-    public SecurityConfigurer(@Qualifier("userServiceImpl") UserDetailsService userDetailsService,
-                              JwtRequestFilter jwtRequestFilter, AuthenticationManager authenticationManager) {
+    public SecurityConfigurerProd(@Qualifier("userServiceImpl") UserDetailsService userDetailsService,
+                                  JwtRequestFilter jwtRequestFilter, AuthenticationManager authenticationManager) {
         this.userDetailsService = userDetailsService;
         this.jwtRequestFilter = jwtRequestFilter;
         this.authenticationManager = authenticationManager;
@@ -56,10 +57,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                         "/swagger-ui.html",
                         "/webjars/**").permitAll()
                 .antMatchers().permitAll()
-                .antMatchers(H2_CONSOLE_ENDPOINT).permitAll() // TODO: Delete it before published and add to profile local
-                .antMatchers("/console/**").permitAll() // TODO: Delete it before published
                 .anyRequest().authenticated()
-//                TODO: Add not permit anyone to timers and stopwatch
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
