@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    platform: [example: "postgres"]
+    url: [Url to db ex: "jdbc:postgresql://localhost:5432/db_name"]
+    username: [Username to db]
+    password: [Password to db]
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: [Dialeclt to db ex: "org.hibernate.dialect.PostgreSQLDialect"]
+    database: [Db ex: "postgresql"]
