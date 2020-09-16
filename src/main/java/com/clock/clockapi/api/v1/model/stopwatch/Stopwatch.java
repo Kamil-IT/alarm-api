@@ -11,8 +11,8 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-@Entity
-@Table(name = "Stopwatchs")
+//@Entity
+//@Table(name = "Stopwatchs")
 public class Stopwatch extends BaseEntity {
 
     /**

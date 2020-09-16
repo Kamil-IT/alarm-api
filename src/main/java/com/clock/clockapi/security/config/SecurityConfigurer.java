@@ -56,9 +56,10 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                         "/swagger-ui.html",
                         "/webjars/**").permitAll()
                 .antMatchers().permitAll()
-                .antMatchers(H2_CONSOLE_ENDPOINT).permitAll() // TODO: Delete it before published
+                .antMatchers(H2_CONSOLE_ENDPOINT).permitAll() // TODO: Delete it before published and add to profile local
                 .antMatchers("/console/**").permitAll() // TODO: Delete it before published
                 .anyRequest().authenticated()
+//                TODO: Add not permit anyone to timers and stopwatch
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

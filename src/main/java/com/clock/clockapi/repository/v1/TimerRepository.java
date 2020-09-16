@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-public interface TimerRepository extends JpaRepository<Timer, String> {
-
-    List<Timer> findAllByUserId(String userId);
-
-    Optional<Timer> findByIdAndUserId(String id, String userId);
-}
+//@Repository
+//public interface TimerRepository extends JpaRepository<Timer, String> {
+//
+//    List<Timer> findAllByUserId(String userId);
+//
+//    Optional<Timer> findByIdAndUserId(String id, String userId);
+//}

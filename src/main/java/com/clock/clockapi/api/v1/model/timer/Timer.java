@@ -13,8 +13,8 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@Entity
-@Table(name = "Timers")
+//@Entity
+//@Table(name = "Timers")
 public class Timer extends BaseEntity {
 
     public static final int HOUR_MAX = 12;

@@ -33,19 +33,19 @@ public class UserApp extends BaseEntity implements UserDetails {
     private String password;
 
     @NotNull
-    @Column(name = "account_non_expired", columnDefinition = "bit default 1", nullable = false)
+    @Column(name = "account_non_expired", columnDefinition = "boolean default true", nullable = false)
     private boolean accountNonExpired;
 
     @NotNull
-    @Column(name = "account_non_locked", columnDefinition = "bit default 1", nullable = false)
+    @Column(name = "account_non_locked", columnDefinition = "boolean default true", nullable = false)
     private boolean accountNonLocked;
 
     @NotNull
-    @Column(name = "credentials_non_expired", columnDefinition = "bit default 1", nullable = false)
+    @Column(name = "credentials_non_expired", columnDefinition = "boolean default true", nullable = false)
     private boolean credentialsNonExpired;
 
     @NotNull
-    @Column(name = "enabled", columnDefinition = "bit default true", nullable = false)
+    @Column(name = "enabled", columnDefinition = "boolean default true", nullable = false)
     private boolean enabled;
 
     @Nullable
