@@ -33,7 +33,6 @@ public class Alarm extends BaseEntity {
     private String description;
 
     /**
-     * TODO: UTC...
      * Type: HH:MM:SS
      */
     private String time;

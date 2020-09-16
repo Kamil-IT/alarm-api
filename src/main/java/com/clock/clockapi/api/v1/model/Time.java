@@ -18,8 +18,6 @@ import java.util.TimeZone;
 @NoArgsConstructor
 public class Time extends BaseEntity {
 
-//    TODO: add timezone
-
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
