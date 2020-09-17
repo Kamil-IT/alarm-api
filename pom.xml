@@ -183,6 +183,12 @@
                 <spring.profiles.active>prod</spring.profiles.active>
             </properties>
         </profile>
+        <profile>
+            <id>prod-missing-certificate</id>
+            <properties>
+                <spring.profiles.active>prod-missing-certificate</spring.profiles.active>
+            </properties>
+        </profile>
     </profiles>
 
 </project>
