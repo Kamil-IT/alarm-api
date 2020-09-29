@@ -5,7 +5,7 @@ Also use as database PostgreSQL in production and for tests h2 in memory databas
 # Authentication
 [Example use](https://github.com/Kamil-IT/clock-api/blob/master/src/test/java/com/clock/clockapi/controller/AuthController.http)
 
-Request to get JWT token should by to ```/api/auth``` and have JSON body witch username and password.
+Request to get JWT token should by to ```/api/auth``` and have JSON body with username and password.
 Token is valid 30 minutes.
 
 If you havent got accout you should send request to ```/api/newaccount``` witch JSON body witch username and password and email.
