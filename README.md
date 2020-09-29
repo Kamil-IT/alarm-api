@@ -1,6 +1,6 @@
 # Alarm API
 REST API for alarm app, which accept JSON for request payload and also send responses to JSON and use JWT authentication. 
-In that moment use h2 in memory database, in future that willl be change to MySQL or PostgreSQL.
+Also use as database PostgreSQL in production and for tests h2 in memory database.
 
 # Authentication
 [Example use](https://github.com/Kamil-IT/clock-api/blob/master/src/test/java/com/clock/clockapi/controller/AuthController.http)
