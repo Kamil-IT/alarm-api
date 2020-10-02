@@ -1,6 +1,8 @@
+[Android app surce code](https://github.com/Kamil-IT/alarm-app)
+
 # Alarm API
 REST API for alarm app, which accept JSON for request payload and also send responses to JSON and use JWT authentication. 
-Also use as database PostgreSQL in production and for tests h2 in memory database.
+Also use as database PostgreSQL in production and for tests h2 in memory database. Server is running on AWS in Docker container.
 
 # Authentication
 [Example use](https://github.com/Kamil-IT/clock-api/blob/master/src/test/java/com/clock/clockapi/controller/AuthController.http)
@@ -16,6 +18,6 @@ All request shoud have header:
 
 Base URL ```/api/v1/```
 
-Full swager JSON documentation available on http://localhost:8080/v2/api-docs
+Full swager JSON documentation available on http://alarmrestapi.eu-central-1.elasticbeanstalk.com/v2/api-docs
 
-Full swager ui documentation available on http://localhost:8080/swagger-ui.html
+Full swager ui documentation available on http://alarmrestapi.eu-central-1.elasticbeanstalk.com/swagger-ui.html
