@@ -1,6 +1,6 @@
 HELP.md
 target/
-!.mvn/wrapper/maven-wrapper.jar
+#!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
 
@@ -33,3 +33,4 @@ build/
 ### Production propertise ###
 /src/main/resources/application-prod.yml
 /src/main/resources/application-prod-missing-certificate.yml
+/src/test/server/
