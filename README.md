@@ -1,5 +1,7 @@
 [Android app surce code](https://github.com/Kamil-IT/alarm-app)
 
+[![<CircleCI>](https://circleci.com/gh/Kamil-IT/alarm-api/tree/master.svg?style=svg)](https://circleci.com/gh/Kamil-IT/alarm-api/tree/master)
+
 # Alarm API
 REST API for alarm app, which accept JSON for request payload and also send responses to JSON and use JWT authentication. 
 Also use as database PostgreSQL in production and for tests h2 in memory database. Server is running on AWS in Docker container.
