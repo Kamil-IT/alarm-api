@@ -55,3 +55,20 @@ Authorization: Bearer JWT_BEARER_TOKEN
     "seconds": 0
   }
 }
+
+### Create alarm with minimal fields
+
+PUT http://localhost:8080/api/v1/alarm
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYwMjc3NTQ1OCwiaWF0IjoxNjAyNzczNjU4fQ.cpMCWNqQ_1yxWyNxM4FzzHpC_xebQO2YVqXN_0QSoxY
+
+{
+  "alarmFrequencyType" : [
+    "MONDAY"
+  ],
+  "time" : {
+    "hours": 17,
+    "minutes": 51,
+    "seconds": 45
+  }
+}

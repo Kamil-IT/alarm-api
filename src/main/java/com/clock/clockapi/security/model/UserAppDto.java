@@ -1,6 +1,7 @@
 package com.clock.clockapi.security.model;
 
 import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,7 @@ import org.springframework.lang.Nullable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ApiModel(value = "User credentials")
 public class UserAppDto {
 
     @NotNull
