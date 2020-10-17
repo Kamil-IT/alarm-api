@@ -22,4 +22,4 @@ Base URL ```/api/v1/```
 
 Full swager JSON documentation available on http://alarmrestapi.eu-central-1.elasticbeanstalk.com/v2/api-docs
 
-Full swager ui documentation available on http://alarmrestapi.eu-central-1.elasticbeanstalk.com/swagger-ui.html
+Full swager ui documentation available on http://alarmrestapi.eu-central-1.elasticbeanstalk.com/swagger-ui
