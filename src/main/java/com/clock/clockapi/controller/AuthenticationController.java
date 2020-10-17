@@ -8,6 +8,7 @@ import com.clock.clockapi.services.UserServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,7 +56,7 @@ public class AuthenticationController {
      */
     @ApiOperation(value="Post create Jwt token")
     @PostMapping({"/auth", "/auth/"})
-    public ResponseEntity<?> createJwtToken(@RequestBody AuthenticationJwtRequest request) throws BadCredentialsException {
+    public ResponseEntity<?> createJwtToken(@ApiParam(name = "User credentials", value = "User credentials") @RequestBody AuthenticationJwtRequest request) throws BadCredentialsException {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword(), new ArrayList<>())
@@ -86,7 +87,11 @@ public class AuthenticationController {
      */
     @ApiOperation(value="Post create new account")
     @PostMapping({"/newaccount", "/newaccount/"})
-    public UserApp createNewAccount(@RequestBody UserAppDto userDtoToCreate) throws BadCredentialsException {
+    public UserApp createNewAccount(@ApiParam(name = "User credentials", value = "User credentials") @RequestBody UserAppDto userDtoToCreate) throws BadCredentialsException {
+        if (userService.isUsernameExist(userDtoToCreate.getUsername())){
+            throw new BadCredentialsException("Username exist in our database, please select different",
+                    new AuthenticationJwtRequest(userDtoToCreate.getUsername(), userDtoToCreate.getPassword()));
+        }
         try {
             UserApp userApp = userAppMapper.UserAppDtoToUserApp(userDtoToCreate);
             userApp.setAccountWorkingInServer();
@@ -113,8 +118,9 @@ public class AuthenticationController {
     @ApiOperation(value="Delete account")
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping({"/deleteaccount", "/deleteaccount/"})
-    public UserAppDeletedResponse deleteAccount(@RequestBody AuthenticationJwtRequest userDtoToDelete,
-                                                Principal principal) throws BadCredentialsException {
+    public UserAppDeletedResponse deleteAccount(
+            @ApiParam(name = "User credentials", value = "User credentials") @RequestBody AuthenticationJwtRequest userDtoToDelete,
+                                                @ApiParam(hidden = true) Principal principal) throws BadCredentialsException {
         UserApp userToDelete;
 
         try {

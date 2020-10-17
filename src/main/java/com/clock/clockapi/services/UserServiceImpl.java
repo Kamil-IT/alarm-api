@@ -55,6 +55,11 @@ public class UserServiceImpl implements UserDetailsService, UserAppMapperService
         return userRepository.save(user);
     }
 
+    @Override
+    public boolean isUsernameExist(String username) {
+        return userRepository.findUserAppByUsername(username).isPresent();
+    }
+
     @Named("getUserById")
     @Override
     public UserApp getUserById(String id) throws NotFoundException {

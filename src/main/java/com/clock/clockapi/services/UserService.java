@@ -20,4 +20,6 @@ public interface UserService {
     UserApp getUserByUsername(String username) throws UsernameNotFoundException;
 
     UserApp updateUser(String id, UserAppDto userApp) throws NotFoundException;
+
+    boolean isUsernameExist(String username);
 }

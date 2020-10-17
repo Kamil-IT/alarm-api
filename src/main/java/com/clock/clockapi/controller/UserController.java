@@ -2,6 +2,7 @@ package com.clock.clockapi.controller;
 
 import com.clock.clockapi.api.v1.Delete;
 import com.clock.clockapi.api.v1.Error;
+import io.swagger.annotations.ApiParam;
 import javassist.NotFoundException;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public interface UserController<ResponseEntity, RequestEntity> {
      * @param principal current user
      */
     @GetMapping({"", "/"})
-    ResponseEntity getUserDetails(Principal principal);
+    ResponseEntity getUserDetails(@ApiParam(hidden = true) Principal principal);
 
     /**
      * Paths: ... , .../
@@ -33,7 +34,7 @@ public interface UserController<ResponseEntity, RequestEntity> {
      * @return should return created ResponseEntity
      */
     @PostMapping({"", "/"})
-    ResponseEntity post(@RequestBody RequestEntity entity, Principal principal) throws NotFoundException;
+    ResponseEntity post(@RequestBody RequestEntity entity, @ApiParam(hidden = true) Principal principal) throws NotFoundException;
 
     /**
      * Paths: /{id}
@@ -43,7 +44,7 @@ public interface UserController<ResponseEntity, RequestEntity> {
      * @return should return object base on DeleteResponse
      */
     @DeleteMapping({"", "/"})
-    Delete delete(Principal principal) throws NotFoundException;
+    Delete delete(@ApiParam(hidden = true) Principal principal) throws NotFoundException;
 
     /**
      * Should handle exception

@@ -2,6 +2,7 @@ package com.clock.clockapi.controller.v1;
 
 import com.clock.clockapi.api.v1.Delete;
 import com.clock.clockapi.api.v1.Error;
+import io.swagger.annotations.ApiParam;
 import javassist.NotFoundException;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public interface BaseController<KeyId, ResponseEntity> {
      * @param principal current user
      */
     @GetMapping({"", "/"})
-    List<ResponseEntity> getAll(Principal principal);
+    List<ResponseEntity> getAll(@ApiParam(hidden = true) Principal principal);
 
     /**
      * Paths: /{id}
@@ -30,7 +31,7 @@ public interface BaseController<KeyId, ResponseEntity> {
      * @return should return ResponseEntity with id from path /{id}
      */
     @GetMapping("/{id}")
-    ResponseEntity getById(@PathVariable("id") KeyId id, Principal principal) throws NotFoundException;
+    ResponseEntity getById(@PathVariable("id") KeyId id, @ApiParam(hidden = true) Principal principal) throws NotFoundException;
 
     /**
      * Paths: ... , .../
@@ -44,7 +45,7 @@ public interface BaseController<KeyId, ResponseEntity> {
      * @return should return created ResponseEntity
      */
     @PostMapping({"", "/"})
-    ResponseEntity post(@RequestBody ResponseEntity entity, Principal principal);
+    ResponseEntity post(@RequestBody() ResponseEntity entity, @ApiParam(hidden = true) Principal principal);
 
     /**
      * Paths: ... , .../
@@ -58,7 +59,7 @@ public interface BaseController<KeyId, ResponseEntity> {
      * @return should return created or updated ResponseEntity
      */
     @PutMapping({"", "/"})
-    ResponseEntity put(@RequestBody ResponseEntity entity, Principal principal);
+    ResponseEntity put(@RequestBody ResponseEntity entity, @ApiParam(hidden = true) Principal principal);
 
     /**
      * Paths: /{id}
@@ -69,7 +70,7 @@ public interface BaseController<KeyId, ResponseEntity> {
      * @return should return object base on DeleteResponse
      */
     @DeleteMapping("/{id}")
-    Delete delete(@PathVariable("id") KeyId id, Principal principal) throws NotFoundException;
+    Delete delete(@PathVariable("id") KeyId id, @ApiParam(hidden = true) Principal principal) throws NotFoundException;
 
     /**
      * Should handle exception

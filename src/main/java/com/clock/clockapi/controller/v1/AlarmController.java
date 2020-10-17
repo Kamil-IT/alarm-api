@@ -3,9 +3,7 @@ package com.clock.clockapi.controller.v1;
 import com.clock.clockapi.api.v1.Delete;
 import com.clock.clockapi.api.v1.modeldto.AlarmDto;
 import com.clock.clockapi.services.v1.BaseUserFilterService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,7 +34,7 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      */
     @ApiOperation("Get all alarms")
     @Override
-    public List<AlarmDto> getAll(Principal principal) {
+    public List<AlarmDto> getAll(@ApiParam(hidden = true) Principal principal) {
         return alarmService.getAll(principal.getName());
     }
 
@@ -69,7 +67,7 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      */
     @ApiOperation("Post alarm")
     @Override
-    public AlarmDto post(AlarmDto alarmDto, Principal principal) {
+    public AlarmDto post(@ApiParam(name = "Alarm", value = "Alarm") AlarmDto alarmDto, Principal principal) {
         return alarmService.post(alarmDto, principal.getName());
     }
 
@@ -87,7 +85,7 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      */
     @ApiOperation("Put alarm")
     @Override
-    public AlarmDto put(AlarmDto alarmDto, Principal principal) {
+    public AlarmDto put(@ApiParam(name = "Alarm", value = "Alarm") AlarmDto alarmDto, Principal principal) {
         return alarmService.put(alarmDto, principal.getName());
     }
 

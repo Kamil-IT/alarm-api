@@ -7,6 +7,7 @@ import com.clock.clockapi.services.UserServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,7 +33,7 @@ public class UserControllerImpl implements UserController<UserApp, UserAppDto> {
 
     @ApiOperation(value="Post User Details")
     @Override
-    public UserApp post(UserAppDto userApp, Principal principal) throws NotFoundException {
+    public UserApp post(@ApiParam(name = "User credentials", value = "User credentials") UserAppDto userApp, Principal principal) throws NotFoundException {
         String userId = userService.getUserByUsername(principal.getName()).getId();
         return userService.updateUser(userId, userApp);
     }
