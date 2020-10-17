@@ -19,7 +19,7 @@ import java.security.Principal;
 @RestController
 @PreAuthorize("isAuthenticated()")
 @RequestMapping("api/user")
-@Api(tags = "User manager")
+@Api(tags = "User manager", value = "User Controller")
 public class UserControllerImpl implements UserController<UserApp, UserAppDto> {
 
     private UserServiceImpl userService;

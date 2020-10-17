@@ -3,6 +3,7 @@ package com.clock.clockapi.security.model;
 import com.clock.clockapi.api.v1.model.BaseEntity;
 import com.clock.clockapi.api.v1.model.alarm.Alarm;
 import com.sun.istack.NotNull;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "Users")
+@ApiModel(value = "User response")
 public class UserApp extends BaseEntity implements UserDetails {
 
     @NotNull
