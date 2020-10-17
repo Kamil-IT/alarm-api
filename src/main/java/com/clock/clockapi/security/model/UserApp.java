@@ -2,8 +2,10 @@ package com.clock.clockapi.security.model;
 
 import com.clock.clockapi.api.v1.model.BaseEntity;
 import com.clock.clockapi.api.v1.model.alarm.Alarm;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiParam;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -65,6 +67,16 @@ public class UserApp extends BaseEntity implements UserDetails {
         this.enabled = true;
     }
 
-    @OneToMany(mappedBy = "userApp")
+    @OneToMany(mappedBy = "userApp", orphanRemoval = true, cascade = CascadeType.PERSIST)
     private List<Alarm> alarms;
+
+    @JsonIgnore
+    public List<Alarm> getAlarms() {
+        return alarms;
+    }
+
+    @JsonIgnore
+    public void setAlarms(List<Alarm> alarms) {
+        this.alarms = alarms;
+    }
 }

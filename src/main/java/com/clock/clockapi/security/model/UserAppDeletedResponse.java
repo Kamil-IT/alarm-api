@@ -14,5 +14,5 @@ import lombok.Setter;
 public class UserAppDeletedResponse {
 
     String message;
-    UserApp appUser;
+    UserAppDto appUser;
 }

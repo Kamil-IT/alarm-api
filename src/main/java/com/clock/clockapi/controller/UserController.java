@@ -3,11 +3,14 @@ package com.clock.clockapi.controller;
 import com.clock.clockapi.api.v1.Delete;
 import com.clock.clockapi.api.v1.Error;
 import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import javassist.NotFoundException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.security.Principal;
+
+import static com.clock.clockapi.swagger.SpringFoxConfig.JWT_TOKEN_NAME_SWAGGER;
 
 public interface UserController<ResponseEntity, RequestEntity> {
 
@@ -19,6 +22,7 @@ public interface UserController<ResponseEntity, RequestEntity> {
      * @return should return all ResponseEntity
      * @param principal current user
      */
+    @Operation(security = { @SecurityRequirement(name = JWT_TOKEN_NAME_SWAGGER) })
     @GetMapping({"", "/"})
     ResponseEntity getUserDetails(@ApiParam(hidden = true) Principal principal);
 
@@ -33,6 +37,7 @@ public interface UserController<ResponseEntity, RequestEntity> {
      * @param principal current user
      * @return should return created ResponseEntity
      */
+    @Operation(security = { @SecurityRequirement(name = JWT_TOKEN_NAME_SWAGGER) })
     @PostMapping({"", "/"})
     ResponseEntity post(@RequestBody RequestEntity entity, @ApiParam(hidden = true) Principal principal) throws NotFoundException;
 
@@ -43,6 +48,7 @@ public interface UserController<ResponseEntity, RequestEntity> {
      * @param principal current user
      * @return should return object base on DeleteResponse
      */
+    @Operation(security = { @SecurityRequirement(name = JWT_TOKEN_NAME_SWAGGER) })
     @DeleteMapping({"", "/"})
     Delete delete(@ApiParam(hidden = true) Principal principal) throws NotFoundException;
 

@@ -7,13 +7,13 @@ import com.clock.clockapi.api.v1.model.Date;
 import com.clock.clockapi.api.v1.model.alarm.frequency.AlarmFrequencyType;
 import com.clock.clockapi.api.v1.model.alarm.ring.RingType;
 import com.clock.clockapi.security.model.UserApp;
-import com.google.common.collect.Sets;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 

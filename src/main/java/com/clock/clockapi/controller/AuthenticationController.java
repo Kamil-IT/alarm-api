@@ -9,6 +9,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
+
+import static com.clock.clockapi.swagger.SpringFoxConfig.JWT_TOKEN_NAME_SWAGGER;
 
 @Slf4j
 @RestController
@@ -115,15 +119,17 @@ public class AuthenticationController {
      *
      * @return should return message and deleted account
      */
-    @ApiOperation(value="Delete account")
     @PreAuthorize("isAuthenticated()")
+    @Operation(security = { @SecurityRequirement(name = JWT_TOKEN_NAME_SWAGGER) })
+    @ApiOperation(value="Delete account")
     @DeleteMapping({"/deleteaccount", "/deleteaccount/"})
     public UserAppDeletedResponse deleteAccount(
             @ApiParam(name = "User credentials", value = "User credentials") @RequestBody AuthenticationJwtRequest userDtoToDelete,
                                                 @ApiParam(hidden = true) Principal principal) throws BadCredentialsException {
-        UserApp userToDelete;
+        UserAppDto deletedUser;
 
         try {
+            UserApp userToDelete;
             if (!principal.getName().equals(userDtoToDelete.getUsername())){
                 throw new BadCredentialsException("Username isn't the same as users what you wont delete",
                         userDtoToDelete);
@@ -136,6 +142,12 @@ public class AuthenticationController {
 
             userToDelete = userService.getUserByUsername(userDtoToDelete.getUsername());
 
+            deletedUser = UserAppDto.builder()
+                    .username(userDtoToDelete.getUsername())
+                    .email(userToDelete.getEmail())
+                    .password(userDtoToDelete.getPassword())
+                    .build();
+
             userService.deleteUserById(userToDelete.getId());
 
         }
@@ -147,7 +159,7 @@ public class AuthenticationController {
 
         return new UserAppDeletedResponse(
                 "Deleted was sucessfull",
-                userToDelete);
+                deletedUser);
     }
 
     /**

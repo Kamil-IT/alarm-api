@@ -3,16 +3,21 @@ package com.clock.clockapi.controller.v1;
 import com.clock.clockapi.api.v1.Delete;
 import com.clock.clockapi.api.v1.modeldto.AlarmDto;
 import com.clock.clockapi.services.v1.BaseUserFilterService;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.security.Principal;
 import java.util.List;
+
+import static com.clock.clockapi.swagger.SpringFoxConfig.JWT_TOKEN_NAME_SWAGGER;
 
 @AllArgsConstructor
 @RestController
@@ -29,8 +34,8 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      * page
      * page/
      *
-     * @return should return all ResponseEntity
      * @param principal current user
+     * @return should return all ResponseEntity
      */
     @ApiOperation("Get all alarms")
     @Override
@@ -43,7 +48,7 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      * Example:
      * page/25
      *
-     * @param s entity id
+     * @param s         entity id
      * @param principal current user
      * @return should return ResponseEntity with id from path /{id}
      */
@@ -61,7 +66,7 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      * page
      * page/
      *
-     * @param alarmDto entity to create
+     * @param alarmDto  entity to create
      * @param principal current user
      * @return should return created ResponseEntity
      */
@@ -79,7 +84,7 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      * page
      * page/
      *
-     * @param alarmDto entity to create or update
+     * @param alarmDto  entity to create or update
      * @param principal current user
      * @return should return created or updated ResponseEntity
      */
@@ -94,7 +99,7 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      * Example:
      * page/25
      *
-     * @param s id object to delete
+     * @param s         id object to delete
      * @param principal current user
      * @return should return object base on DeleteResponse
      */
