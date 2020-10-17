@@ -1,5 +1,6 @@
 package com.clock.clockapi.api.v1.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,14 +17,17 @@ public class Date {
 
     @Min(1)
     @Max(31)
+    @ApiModelProperty(required = true)
     private Integer day;
 
     @Min(1)
     @Max(12)
+    @ApiModelProperty(required = true)
     private Integer month;
 
     @Min(1970)
     @Max(2100)
+    @ApiModelProperty(required = true)
     private Integer year;
 
     public Date(String fromString){

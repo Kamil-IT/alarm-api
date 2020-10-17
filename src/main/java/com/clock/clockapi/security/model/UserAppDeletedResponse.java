@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(value = "User delete response request")
+@ApiModel(value = "User delete response")
 public class UserAppDeletedResponse {
 
     String message;

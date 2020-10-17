@@ -1,6 +1,7 @@
 package com.clock.clockapi.api.v1.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -40,8 +41,11 @@ public class Time extends BaseEntity {
     public static final int SECOND_MAX = 60;
     public static final int SECOND_MIN = 0;
 
+    @ApiModelProperty(required = true)
     private Integer hours;
+    @ApiModelProperty(required = true)
     private Integer minutes;
+    @ApiModelProperty(required = true)
     private Integer seconds;
 
     @JsonIgnore

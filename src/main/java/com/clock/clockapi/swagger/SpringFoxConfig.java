@@ -1,8 +1,6 @@
 package com.clock.clockapi.swagger;
 
 import com.clock.clockapi.api.v1.model.alarm.Alarm;
-import com.clock.clockapi.api.v1.modeldto.AlarmDto;
-import com.clock.clockapi.security.model.UserApp;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -10,7 +8,6 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger.web.*;
 
 import java.util.Collections;
 
@@ -20,7 +17,7 @@ public class SpringFoxConfig {
     @Bean
     public Docket alarmApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .ignoredParameterTypes(Alarm.class, UserApp.class)
+                .ignoredParameterTypes(Alarm.class)
                 .select()
                 .paths(PathSelectors.ant("/api/**"))
                 .build()

@@ -14,6 +14,8 @@ import lombok.Setter;
 @ApiModel(value = "User authentication credentials request")
 public class AuthenticationJwtRequest {
 
+    @ApiModelProperty(required = true)
     private String username;
+    @ApiModelProperty(required = true)
     private String password;
 }

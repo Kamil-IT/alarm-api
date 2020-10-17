@@ -3,6 +3,7 @@ package com.clock.clockapi.services;
 import com.clock.clockapi.api.v1.mapper.UserAppMapperService;
 import com.clock.clockapi.security.model.UserApp;
 import com.clock.clockapi.repository.UserRepository;
+import com.clock.clockapi.security.model.UserAppDto;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.mapstruct.Named;
@@ -29,12 +30,29 @@ public class UserServiceImpl implements UserDetailsService, UserAppMapperService
                         new UsernameNotFoundException("Not found user witch username = " + username));
     }
 
+    @Named("getUserByUsername")
     @Override
     public UserApp getUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository
                 .findUserAppByUsername(username)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("Not found user witch username = " + username));
+    }
+
+    /**
+     * Update only given fields
+     * @param id user id
+     * @param userApp user object
+     * @return updated user
+     * @throws NotFoundException
+     */
+    @Override
+    public UserApp updateUser(String id, UserAppDto userApp) throws NotFoundException {
+        UserApp user = getUserById(id);
+        if (userApp.getUsername() != null) user.setUsername(userApp.getUsername());
+        if (userApp.getEmail() != null) user.setEmail(userApp.getEmail());
+        if (userApp.getPassword() != null) user.setPassword(passwordEncoder.encode(userApp.getPassword()));
+        return userRepository.save(user);
     }
 
     @Named("getUserById")
