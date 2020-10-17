@@ -3,6 +3,9 @@ package com.clock.clockapi.controller.v1;
 import com.clock.clockapi.api.v1.Delete;
 import com.clock.clockapi.api.v1.modeldto.AlarmDto;
 import com.clock.clockapi.services.v1.BaseUserFilterService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
 import javassist.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +20,7 @@ import java.util.List;
 @RestController
 @PreAuthorize("isAuthenticated()")
 @RequestMapping("api/v1/alarm")
+@Api(tags = "Alarm manager")
 public class AlarmController implements BaseController<String, AlarmDto> {
 
     private final BaseUserFilterService<AlarmDto, String> alarmService;
@@ -30,6 +34,7 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      * @return should return all ResponseEntity
      * @param principal current user
      */
+    @ApiOperation("Get all alarms")
     @Override
     public List<AlarmDto> getAll(Principal principal) {
         return alarmService.getAll(principal.getName());
@@ -44,6 +49,7 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      * @param principal current user
      * @return should return ResponseEntity with id from path /{id}
      */
+    @ApiOperation("Get alarm by id")
     @Override
     public AlarmDto getById(String s, Principal principal) throws NotFoundException {
         return alarmService.getById(s, principal.getName());
@@ -61,6 +67,7 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      * @param principal current user
      * @return should return created ResponseEntity
      */
+    @ApiOperation("Post alarm")
     @Override
     public AlarmDto post(AlarmDto alarmDto, Principal principal) {
         return alarmService.post(alarmDto, principal.getName());
@@ -78,6 +85,7 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      * @param principal current user
      * @return should return created or updated ResponseEntity
      */
+    @ApiOperation("Put alarm")
     @Override
     public AlarmDto put(AlarmDto alarmDto, Principal principal) {
         return alarmService.put(alarmDto, principal.getName());
@@ -92,6 +100,7 @@ public class AlarmController implements BaseController<String, AlarmDto> {
      * @param principal current user
      * @return should return object base on DeleteResponse
      */
+    @ApiOperation("Delete alarm by id")
     @Override
     public Delete delete(String s, Principal principal) throws NotFoundException {
         alarmService.delete(s, principal.getName());

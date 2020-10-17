@@ -5,6 +5,9 @@ import com.clock.clockapi.security.exception.BadCredentialsException;
 import com.clock.clockapi.security.mapper.UserAppMapper;
 import com.clock.clockapi.security.model.*;
 import com.clock.clockapi.services.UserServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 @Slf4j
 @RestController
 @RequestMapping("/api")
+@Api(tags = "Authentication manager")
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
@@ -49,6 +53,7 @@ public class AuthenticationController {
      *
      * @return should return all jwt token
      */
+    @ApiOperation(value="Post create Jwt token")
     @PostMapping({"/auth", "/auth/"})
     public ResponseEntity<?> createJwtToken(@RequestBody AuthenticationJwtRequest request) throws BadCredentialsException {
         try {
@@ -79,6 +84,7 @@ public class AuthenticationController {
      *
      * @return should return created user
      */
+    @ApiOperation(value="Post create new account")
     @PostMapping({"/newaccount", "/newaccount/"})
     public UserApp createNewAccount(@RequestBody UserAppDto userDtoToCreate) throws BadCredentialsException {
         try {
@@ -104,6 +110,7 @@ public class AuthenticationController {
      *
      * @return should return message and deleted account
      */
+    @ApiOperation(value="Delete account")
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping({"/deleteaccount", "/deleteaccount/"})
     public UserAppDeletedResponse deleteAccount(@RequestBody AuthenticationJwtRequest userDtoToDelete,
