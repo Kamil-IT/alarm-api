@@ -1,13 +1,11 @@
 package com.clock.clockapi.controller;
 
 import com.clock.clockapi.security.JwtUtil;
-import com.clock.clockapi.security.exception.BadCredentialsException;
 import com.clock.clockapi.security.mapper.UserAppMapper;
 import com.clock.clockapi.security.model.AuthenticationJwtRequest;
 import com.clock.clockapi.security.model.UserApp;
 import com.clock.clockapi.security.model.UserAppDto;
 import com.clock.clockapi.services.UserServiceImpl;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,24 +17,16 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Collection;
-
 import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -62,8 +52,21 @@ class AuthenticationControllerTest {
 
     MockMvc mockMvc;
 
+    UserAppDto userAppDto;
+    UserApp userApp;
+
     @BeforeEach
     void setUp() {
+        userAppDto = UserAppDto.builder()
+                .username("admin")
+                .password("admin2")
+                .email("ex@gm.com").build();
+
+        userApp = UserApp.builder()
+                .username("admin")
+                .password("admin2")
+                .email("ex@gm.com")
+                .id("ID").build();
 
         mockMvc = MockMvcBuilders.standaloneSetup(authenticationController).build();
     }
@@ -108,16 +111,6 @@ class AuthenticationControllerTest {
 
     @Test
     void createNewAccount() throws Exception {
-        UserAppDto userAppDto = UserAppDto.builder()
-                .username("admin")
-                .password("admin2")
-                .email("ex@gm.com").build();
-
-        UserApp userApp = UserApp.builder()
-                .username("admin")
-                .password("admin2")
-                .email("ex@gm.com")
-                .id("ID").build();
 
         when(userAppMapper.UserAppDtoToUserApp(any(UserAppDto.class))).thenReturn(userApp);
         when(userService.saveUser(any(UserApp.class))).thenReturn(userApp);
@@ -154,17 +147,51 @@ class AuthenticationControllerTest {
     }
 
     @Test
+    void createJwtToken_noAuthentication() throws Exception {
+
+        AuthenticationJwtRequest requestCredentials =
+                new AuthenticationJwtRequest(userApp.getUsername(), userApp.getPassword());
+
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenThrow(new AuthenticationException("message"){});
+
+        mockMvc.perform(post("/api/auth")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(requestCredentials)))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void createNewAccount_usernameExist() throws Exception {
+        AuthenticationJwtRequest requestCredentials =
+                new AuthenticationJwtRequest(userApp.getUsername(), userApp.getPassword());
+
+        when(userService.isUsernameExist(anyString())).thenReturn(true);
+
+        mockMvc.perform(post("/api/newaccount")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(requestCredentials)))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    void deleteAccount_BadCredentials() throws Exception {
+        mockMvc.perform(post("/api/deleteaccount")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
     void deleteAccount() {
 //        TODO: implement it
     }
 
     @Test
-    void deleteAccount_noPermission() {
+    void createNewAccount_bedCredentials() {
 //        TODO: implement it
     }
 
     @Test
-    void deleteAccount_BadCredentials() {
+    void handleBadCredentialsException() {
 //        TODO: implement it
     }
 }

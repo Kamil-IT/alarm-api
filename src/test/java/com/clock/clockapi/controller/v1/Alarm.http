@@ -60,15 +60,27 @@ Authorization: Bearer JWT_BEARER_TOKEN
 
 PUT http://localhost:8080/api/v1/alarm
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTYwMjc3NTQ1OCwiaWF0IjoxNjAyNzczNjU4fQ.cpMCWNqQ_1yxWyNxM4FzzHpC_xebQO2YVqXN_0QSoxY
+Authorization: Bearer JWT_BEARER_TOKEN
 
 {
   "alarmFrequencyType" : [
-    "MONDAY"
+    "MONDAY", "CUSTOM"
   ],
   "time" : {
     "hours": 17,
     "minutes": 51,
     "seconds": 45
-  }
+  },
+  "alarmFrequencyCostume" : [
+    {
+      "day" : "1",
+      "month" : "1",
+      "year" : "2000"
+    },
+    {
+      "day" : "2",
+      "month" : "2",
+      "year" : "2000"
+    }
+  ]
 }
