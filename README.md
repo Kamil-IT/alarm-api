@@ -20,6 +20,8 @@ All request shoud have header:
 
 Base URL ```/api/v1/```
 
-Full swager JSON documentation available on http://alarmrestapi.eu-central-1.elasticbeanstalk.com/v2/api-docs
+Full swager JSON documentation available: 
+[v2](http://alarmrestapi.eu-central-1.elasticbeanstalk.com/v2/api-docs)
+[v3](http://alarmrestapi.eu-central-1.elasticbeanstalk.com/v3/api-docs)
 
 Full swager ui documentation available on http://alarmrestapi.eu-central-1.elasticbeanstalk.com/swagger-ui
