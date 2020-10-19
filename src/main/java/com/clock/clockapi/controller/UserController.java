@@ -39,7 +39,7 @@ public interface UserController<ResponseEntity, RequestEntity> {
      */
     @Operation(security = { @SecurityRequirement(name = JWT_TOKEN_NAME_SWAGGER) })
     @PostMapping({"", "/"})
-    ResponseEntity post(@RequestBody RequestEntity entity, @ApiParam(hidden = true) Principal principal) throws NotFoundException;
+    ResponseEntity put(@RequestBody RequestEntity entity, @ApiParam(hidden = true) Principal principal) throws NotFoundException;
 
     /**
      * Paths: /{id}

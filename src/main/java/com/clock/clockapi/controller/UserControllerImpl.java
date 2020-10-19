@@ -31,9 +31,9 @@ public class UserControllerImpl implements UserController<UserApp, UserAppDto> {
         return userService.getUserByUsername(principal.getName());
     }
 
-    @ApiOperation(value="Post User Details")
+    @ApiOperation(value="Put User Details")
     @Override
-    public UserApp post(@ApiParam(name = "User credentials", value = "User credentials") UserAppDto userApp, Principal principal) throws NotFoundException {
+    public UserApp put(@ApiParam(name = "User credentials", value = "User credentials") UserAppDto userApp, Principal principal) throws NotFoundException {
         String userId = userService.getUserByUsername(principal.getName()).getId();
         return userService.updateUser(userId, userApp);
     }
