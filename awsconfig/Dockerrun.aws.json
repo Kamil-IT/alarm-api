@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "devcivil/alarmrestapiwithoutcertificate:latest",
+    "Name": "devcivil/alarm-api-non-tls:latest",
     "Update": "true"
   },
   "Ports": [
