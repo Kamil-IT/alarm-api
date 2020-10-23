@@ -11,7 +11,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
       - run: chmod +x ./mvnw
-      - run: ./mvnw -Dmaven.test.skip=true package
+      - run: ./mvnw -Dmaven.test.skip=true package -P prod-missing-certificate
       - save_cache:
           paths:
             - ~/.m2
@@ -47,7 +47,14 @@ jobs:
       - image: circleci/openjdk:11.0.6-jdk-stretch
     steps:
       - checkout
-      - run: echo "deploy not configured"
+      - setup_remote_docker
+      - run:
+          named: Deploy to Docker Hub
+          command: |
+            chmod a+x mvnw
+            ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=devcivil/alarm-api-non-tls -P prod-missing-certificate
+            echo $DOCKER_PWD | docker login -u ${DOCKER_USER} --password-stdin
+            docker push devcivil/alarm-api-non-tls:latest
 
 workflows:
   version: 2
@@ -59,6 +66,8 @@ workflows:
           requires:
             - build
       - deploy:
+          context:
+            - docker account
           requires:
             - build
             - test
