@@ -58,7 +58,7 @@ public class AuthenticationController {
      *
      * @return should return all jwt token
      */
-    @ApiOperation(value="Post create Jwt token")
+    @ApiOperation(value="Post create JWT token")
     @PostMapping({"/auth", "/auth/"})
     public ResponseEntity<?> createJwtToken(@ApiParam(name = "User credentials", value = "User credentials") @RequestBody AuthenticationJwtRequest request) throws BadCredentialsException {
         try {

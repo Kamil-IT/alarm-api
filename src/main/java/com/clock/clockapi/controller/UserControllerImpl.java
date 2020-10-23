@@ -25,13 +25,13 @@ public class UserControllerImpl implements UserController<UserApp, UserAppDto> {
 
     private UserServiceImpl userService;
 
-    @ApiOperation(value="Get User Details")
+    @ApiOperation(value="Get User details")
     @Override
     public UserApp getUserDetails(Principal principal) {
         return userService.getUserByUsername(principal.getName());
     }
 
-    @ApiOperation(value="Put User Details")
+    @ApiOperation(value="Put User details")
     @Override
     public UserApp put(@ApiParam(name = "User credentials", value = "User credentials") UserAppDto userApp, Principal principal) throws NotFoundException {
         String userId = userService.getUserByUsername(principal.getName()).getId();
