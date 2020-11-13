@@ -1,0 +1,18 @@
+
+jwt.secret-key: Q{a7u:f7B#9.ce^4mUPDThjSp=Ga+VxaJUHQF;Z[9cuEQuDGqV5M2Cx{Q{=w(tQ#@8mZSWSa~<q;F-efx?,yj#$EhM`F~bkW^zG
+
+spring:
+  profiles:
+    active: prod
+
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://balarama.db.elephantsql.com:5432/rodlxrkv
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
