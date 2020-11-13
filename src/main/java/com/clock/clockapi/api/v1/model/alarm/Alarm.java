@@ -114,6 +114,22 @@ public class Alarm extends BaseEntity {
         if (snooze == null) {
             snooze = Snooze.MIN_5;
         }
+//        Name
+        if (name == null){
+            name = "";
+        }
+//        Description
+        if (description == null){
+            description = "";
+        }
+//        Ring Type
+        if (ringType == null){
+            ringType = RingType.ALARM_CLASSIC;
+        }
+//        Alarm Turn Off Type
+        if (alarmTurnOffType == null){
+            alarmTurnOffType = AlarmTurnOffType.NORMAL;
+        }
     }
 
 }

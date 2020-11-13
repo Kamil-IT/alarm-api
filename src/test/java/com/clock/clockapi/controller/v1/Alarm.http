@@ -64,23 +64,11 @@ Authorization: Bearer JWT_BEARER_TOKEN
 
 {
   "alarmFrequencyType" : [
-    "MONDAY", "CUSTOM"
+    "MONDAY"
   ],
   "time" : {
     "hours": 17,
     "minutes": 51,
     "seconds": 45
-  },
-  "alarmFrequencyCostume" : [
-    {
-      "day" : "1",
-      "month" : "1",
-      "year" : "2000"
-    },
-    {
-      "day" : "2",
-      "month" : "2",
-      "year" : "2000"
-    }
-  ]
+  }
 }
