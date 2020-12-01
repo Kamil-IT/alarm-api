@@ -58,7 +58,8 @@ public class SecurityConfigurerProd extends WebSecurityConfigurerAdapter {
                         "/swagger-ui/**",
                         "/swagger-ui.html",
                         "/webjars/**",
-                        "/actuator/health").permitAll()
+                        "/actuator/health",
+                        "/favicon.ico").permitAll()
                 .antMatchers().permitAll()
                 .anyRequest().authenticated()
                 .and()

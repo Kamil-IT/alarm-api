@@ -58,7 +58,9 @@ public class SecurityConfigurerLocal extends WebSecurityConfigurerAdapter {
                         "/swagger-ui.html",
                         "/v3/api-docs",
                         "/swagger-ui/**",
-                        "/webjars/**").permitAll()
+                        "/webjars/**",
+                        "/actuator/health",
+                        "/favicon.ico").permitAll()
                 .antMatchers().permitAll()
                 .antMatchers(H2_CONSOLE_ENDPOINT).permitAll()
                 .antMatchers("/console/**").permitAll()
