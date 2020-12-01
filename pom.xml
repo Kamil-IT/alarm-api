@@ -184,9 +184,9 @@
             </properties>
         </profile>
         <profile>
-            <id>prod-missing-certificate</id>
+            <id>prod-non-tls</id>
             <properties>
-                <spring.profiles.active>prod-missing-certificate</spring.profiles.active>
+                <spring.profiles.active>prod-non-tls</spring.profiles.active>
             </properties>
         </profile>
     </profiles>

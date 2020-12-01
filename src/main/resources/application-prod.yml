@@ -1,5 +1,5 @@
 
-jwt.secret-key: Q{a7u:f7B#9.ce^4mUPDThjSp=Ga+VxaJUHQF;Z[9cuEQuDGqV5M2Cx{Q{=w(tQ#@8mZSWSa~<q;F-efx?,yj#$EhM`F~bkW^zG
+jwt.secret-key: ${JWT_SECRET_KEY}
 
 spring:
   profiles:
@@ -16,3 +16,15 @@ spring:
       ddl-auto: validate
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     database: postgresql
+
+server:
+  ssl:
+    key-store: src/main/resources/keystore.jks
+    key-store-password: ${SSL_STORE_PASSWORD}
+    key-store-type: jks
+
+    key-alias: ${SSL_KEY_ALIAS}
+    key-password: ${SSL_KEY_PASSWORD}
+
+    enabled: true
+  port: 443

@@ -11,7 +11,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "pom.xml" }}
       - run: chmod +x ./mvnw
-      - run: ./mvnw -Dmaven.test.skip=true package -P prod-missing-certificate
+      - run: ./mvnw -Dmaven.test.skip=true package -P prod-non-tls
       - save_cache:
           paths:
             - ~/.m2
@@ -52,7 +52,7 @@ jobs:
           named: Deploy to Docker Hub
           command: |
             chmod a+x mvnw
-            ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=devcivil/alarm-api-non-tls -P prod-missing-certificate
+            ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=devcivil/alarm-api-non-tls -P prod-non-tls
             echo $DOCKER_PWD | docker login -u ${DOCKER_USER} --password-stdin
             docker push devcivil/alarm-api-non-tls:latest
 
