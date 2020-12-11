@@ -2,8 +2,7 @@ package com.clock.clockapi.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +12,11 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
+@AllArgsConstructor
 @Service
 public class JwtUtil {
 
-    public static final int EXPIRATION = 30;
-
-//    Don't use it in constructor because it will be null
-    @Value("${jwt.secret-key:secret_key}")
-    private String SECRET_KEY = "secret_key";
+    private JwtTokenConfig jwtTokenConfig;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -36,7 +32,7 @@ public class JwtUtil {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        return Jwts.parser().setSigningKey(jwtTokenConfig.getSecretKey()).parseClaimsJws(token).getBody();
     }
 
     private Boolean isTokenExpired(String token) {
@@ -45,6 +41,9 @@ public class JwtUtil {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("latitude", jwtTokenConfig.SERVER_LATITUDE);
+        claims.put("longitude", jwtTokenConfig.SERVER_LONGITUDE);
+        claims.put("random", jwtTokenConfig.getRandomString());
         return createToken(claims, userDetails.getUsername());
     }
 
@@ -53,8 +52,8 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(EXPIRATION)))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
+                .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(jwtTokenConfig.EXPIRATION_MIN)))
+                .signWith(JwtTokenConfig.ALGORITHM_TO_HASH_TOKEN, jwtTokenConfig.getSecretKey()).compact();
     }
 
     public Boolean validateToken(String token, UserDetails userDetails){

@@ -1,5 +1,8 @@
-
-jwt.secret-key: ${JWT_SECRET_KEY}
+jwt:
+  public-key:
+    location: src/main/resources/jwt-key/jwt-public-key-prod.txt
+  secret-key:
+    location: src/main/resources/jwt-key/jwt-private-key-prod.txt
 
 spring:
   profiles:
